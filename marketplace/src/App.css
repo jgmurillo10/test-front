@@ -1,0 +1,25 @@
+@import '~antd/dist/antd.css';
+.header {
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1em;
+}
+.header-container {
+  display: inline-grid;
+}
+.sider {
+  background-color: grey;
+}
+.content {
+  min-height: 100vh;
+  background-color: #D7F2BA;
+}
+.footer {
+  height:10vh;
+  background-color: #676F54;
+  color: white;
+
+}
