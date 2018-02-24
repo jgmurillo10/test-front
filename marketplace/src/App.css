@@ -1,17 +1,53 @@
 @import '~antd/dist/antd.css';
-.header {
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500');
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+p,div {
+  font-family: 'Roboto',sans-serif;
+  font-weight: 300;
+}
+.header-container {
   background-color: #fff;
   position: fixed;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   padding-top: 1em;
+  height: auto;
 }
-.header-container {
-  display: inline-grid;
+/*template areas for the header section*/
+.header {
+  height: 100%;
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template-columns: repeat(12,1fr);
+  grid-template-rows: auto auto;
+  grid-template-areas: 
+    "hl hl hsb hsb hsb hsb hsb hsb hsb hsb hsb hsb"
+    "hl hl  hm hm  hm  hm  hm  hm  hm  hm  hm  hm";
+
 }
-.sider {
-  background-color: grey;
+.header-logo {
+  grid-area: hl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 7%;
+  top: 4vh;
+  
+
+}
+.header-search-bar {
+  grid-area: hsb;
+}
+.header-menu {
+  grid-area: hm;
+  position: relative;
+  bottom: 0;
 }
 .content {
   min-height: 100vh;
