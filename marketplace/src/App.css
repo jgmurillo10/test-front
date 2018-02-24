@@ -11,15 +11,17 @@ p,div {
 }
 .header-container {
   background-color: #fff;
+  z-index: 999;
   position: fixed;
   width: 100%;
   display: flex;
   justify-content: center;
   padding-top: 1em;
-  height: auto;
+  height: 20vh;
 }
 /*template areas for the header section*/
 .header {
+  
   height: 100%;
   display: grid;
   grid-gap: 0.5em;
@@ -46,16 +48,42 @@ p,div {
 }
 .header-menu {
   grid-area: hm;
-  position: relative;
-  bottom: 0;
+  
 }
 .content {
   min-height: 100vh;
   background-color: #D7F2BA;
 }
+.main-content {
+  margin-top: 20vh;
+  z-index: 9;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card {
+  z-index: 1;
+  margin: 1em;
+}
 .footer {
   height:10vh;
   background-color: #676F54;
   color: white;
+}
 
+@media only screen and (max-width: 1150px) {
+    .header {
+      height: 100%;
+      display: grid;
+      grid-gap: 0.5em;
+      grid-template-columns: repeat(3,1fr);
+      grid-template-rows: 10vh 10vh 10vh;
+      grid-template-areas: 
+        "hl  hl  hl"
+        "hsb hsb hsb"
+        "hm  hm  hm";
+
+    }
 }
