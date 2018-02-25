@@ -122,9 +122,10 @@ export default class MainContent extends Component {
 					<div className="main-filter">
 						<div className="main-filter-order">
 							<Card title="Ordenar resultados"  style={{  }}>
-							    <Button>Precio <Icon type="up" /> <Icon type="down" /></Button>
-								<Button>Disponibilidad <Icon type="up" /> <Icon type="down" /></Button>
-								<Button>Cantidad <Icon type="up" /> <Icon type="down" /></Button>
+							    <Button className="order-buttons" onClick={this.props.orderByPrice}>Precio <Icon type="up" /> <Icon type="down" /></Button>
+								<Button className="order-buttons" onClick={this.props.orderByA}>Disponibilidad <Icon type="up" /> <Icon type="down" /></Button>
+								<Button className="order-buttons" onClick={this.props.orderByQuantity}>Cantidad <Icon type="up" /> <Icon type="down" /></Button>
+								<Button className="order-buttons" onClick={this.props.orderByName}>Nombre <Icon type="up" /> <Icon type="down" /></Button>
 								
 							 </Card>
 						</div>
@@ -159,6 +160,8 @@ export default class MainContent extends Component {
 								      title={d.name}
 								      description={d.price}
 								    />
+								    {"quantity "+d.quantity}
+								    {"available "+d.available}
 								  </Card>
 
 							)

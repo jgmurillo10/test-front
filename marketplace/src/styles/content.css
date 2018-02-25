@@ -38,7 +38,13 @@
 .card {
   z-index: 1;
   margin: 1em;
-}/*
+}
+
+.order-buttons {
+  width: 100%;
+}
+/*
+
 
 
 .certain-category-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix {

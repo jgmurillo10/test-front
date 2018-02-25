@@ -33,15 +33,54 @@ class App extends Component {
   };
   filterData = (ids) => {
     let filteredProducts = this.state.data.filter((d) => {
-      return d.sublevel_id === ids[0]
+      return d.sublevel_id === ids[ids.length-1]
     })
-    console.log(this.state.products)
     this.setState({
       products:filteredProducts
     })
 
   }
-
+  orderByPrice = (order) => {
+    let sorted = this.sortByKey(this.state.products,"price",true);
+    this.setState({
+      products: sorted,
+    })
+  }
+  sortByKey = (array, key,parseNumber) => {
+    console.log(array)
+    return array.sort(function(a, b) {
+      var x,y;
+      x = a[key];
+      y = b[key];
+      if(parseNumber){
+        x = Number(a[key].replace("$","").replace(",",""));
+        y = Number(b[key].replace("$","").replace(",",""));
+        console.log(x,y)
+      }
+      
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      
+    });
+  }
+  orderByAvailibity = (order) => {
+    let sorted = this.sortByKey(this.state.products,"available");
+    this.setState({
+      products: sorted,
+    })
+  }
+  orderByQuantity = (order) => {
+    let sorted = this.sortByKey(this.state.products,"quantity");
+    this.setState({
+      products: sorted,
+    })
+  }
+  orderByName = (order) => {
+    let sorted = this.sortByKey(this.state.products,"name");
+    this.setState({
+      products: sorted,
+    })
+  }
+  
   render() {
     return (
       <div>
@@ -60,6 +99,10 @@ class App extends Component {
           <Layout>
             <Content>
               <MainContent 
+                orderByPrice={this.orderByPrice}
+                orderByName={this.orderByName}
+                orderByQuantity={this.orderByQuantity}
+                orderByA={this.orderByAvailibity}
                 products={this.state.products}>
               </MainContent>
             </Content>
