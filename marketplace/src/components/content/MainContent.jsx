@@ -121,24 +121,25 @@ export default class MainContent extends Component {
 					</div>
 					<div className="main-filter">
 						<div className="main-filter-order">
-							<p>Resultados:</p>
-							<h3>Ordenar resultados</h3>
-							<Button>Precio <Icon type="up" /> <Icon type="down" /></Button>
-							<Button>Disponibilidad <Icon type="up" /> <Icon type="down" /></Button>
-							<Button>Cantidad <Icon type="up" /> <Icon type="down" /></Button>
-							
-
-							
+							<Card title="Ordenar resultados"  style={{  }}>
+							    <Button>Precio <Icon type="up" /> <Icon type="down" /></Button>
+								<Button>Disponibilidad <Icon type="up" /> <Icon type="down" /></Button>
+								<Button>Cantidad <Icon type="up" /> <Icon type="down" /></Button>
+								
+							 </Card>
 						</div>
 						<div className="mail-filter-filer">
-							<h3>Filtrar resultados</h3>
-							<p>Disponibilidad</p>
-							<Checkbox onChange={this.onChangeSlider}>Mostrar disponibles (#)</Checkbox>
-							<p>Precio</p>
-							<Slider range step={10} defaultValue={[20, 50]} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
-							<p>Cantidad en stock</p>
-							<Slider defaultValue={30} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
 
+							<Card title="Filtrar resultados"  style={{  }}>
+							   	<p>Disponibilidad</p>
+								<Checkbox onChange={this.onChangeSlider}>Mostrar disponibles (#)</Checkbox>
+								<p>Precio</p>
+								<Slider range step={10} defaultValue={[20, 50]} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
+								<p>Cantidad en stock</p>
+								<Slider defaultValue={30} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
+
+							 </Card>
+							
 						</div>
 					</div>
 
