@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Icon } from "antd";
-import { Input } from "antd";
+import { Menu, Icon, Cascader, Input } from "antd";
 import PropTypes from "prop-types";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -27,28 +26,44 @@ export default class HeaderMenu extends Component {
        //      <Menu.Item key="alipay">
        //        <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
        //      </Menu.Item>
+  componentDidMount(){
+
+  }
   handleClick = (e) => {
     console.log("click ", e);
     this.setState({
       current: e.key,
     });
   }
+  renderMenu = () => {
+    this.props.categories.map((d,i)=>{
+                  return (<Menu.Item key={d.id}>{d.name}</Menu.Item>)              
+    })
+  }
+  onChange = (value) => {
+    console.log(value);
+  }
+
   render() {
     return (
       <div className="header">
-        <div className="header-logo">
-          <Icon className="header-icon" type="shop" />
-          <h3>EL</h3>
-        </div>
+        {/*<div className="header-logo">
+                  <Icon className="header-icon" type="shop" />
+                  <h3>EL</h3>
+                </div>*/}
         
         <div className="header-menu">
           <Menu
             onClick={this.handleClick}
             mode="horizontal"
           >
-            {this.props.categories?
+            {this.props.categories.length!==0?
               this.props.categories.map((d,i)=>{
-                  return (<Menu.Item key={d.id}>{d.name}</Menu.Item>)  
+                  return (<Menu.Item key={d.id}>
+
+                    <Cascader key={d.id} options={d.children} onChange={this.onChange} placeholder={d.label} />
+
+                    </Menu.Item>)  
                 
                 
               })
@@ -57,12 +72,9 @@ export default class HeaderMenu extends Component {
            
           </Menu>
         </div>
-        {/*<div className="header-search-bar">
-                  <Input placeholder="Search for products" />
+        {/*<div className="header-cart">
+                  <Icon type="shopping-cart" />
                 </div>*/}
-        <div className="header-cart">
-          <Icon type="shopping-cart" />
-        </div>
       </div>
          
     );

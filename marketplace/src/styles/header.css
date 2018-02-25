@@ -1,10 +1,13 @@
 /*template areas for the header section*/
 .header {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(12,1fr);
   grid-template-rows: 10vh;
   grid-template-areas: 
-    "hl hm   hm  hm   hm   hm   hm   hm   hm   hm   hm   hc";
+    "hm hm   hm  hm   hm   hm   hm   hm   hm   hm   hm   hm";
+  align-items: center;
+  justify-items: center;
 
 }
 .header-logo {

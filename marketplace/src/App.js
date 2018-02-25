@@ -18,15 +18,42 @@ class App extends Component {
   getCategories = () => {
     d3.json("data/categories.json", (err,categories) => {
       if (err) {return};
-      this.setState({ categories: categories })
+      this.setState({ categories: categories });
     })
   }
   getProducts = () => {
     d3.json("data/products.json", (err,products) => {
       if(err) return;
-      console.log(products)
-      this.setState({ products: products})
+      this.setState({ products: products});
     })
+  };
+  getSubLevels = (category) => {
+      console.log(category)
+      if(!category.sublevels){
+        return 1;
+      }
+      else{
+        category.sublevels.map((c)=>{
+          return this.getSubLevels(c)+1;
+        })
+      }
+
+  };
+  getCategoriesLevels = (categories,i) => {
+    categories.forEach((c) => {
+      if(!c.level){
+        c.level = i;
+        if (c.sublevels) {
+          this.getCategoriesLevels(c.sublevels,i++);
+        }
+        else{
+          return;
+        }
+      }
+      
+    })
+    console.log(categories);
+    
   }
   render() {
     return (
@@ -34,7 +61,9 @@ class App extends Component {
         <Layout>
         
           <Header className="header-container"> 
-            <HeaderMenu categories={this.state.categories} ></HeaderMenu>
+            {this.state.categories!==0?
+            <HeaderMenu categories={this.state.categories} ></HeaderMenu>:''
+            }
           </Header>
         
           

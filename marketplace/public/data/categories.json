@@ -1,43 +1,43 @@
 [
 	{
-		"id": 1,
-		"name": "Bebidas",
-		"sublevels": [
+		"value": 1,
+		"label": "Bebidas",
+		"children": [
 			{
-				"id": 1,
-				"name": "Gaseosas",
-				"sublevels": [
+				"value": 1,
+				"label": "Gaseosas",
+				"children": [
 					{
-						"id": 2,
-						"name": "Con azúcar"
+						"value": 2,
+						"label": "Con azúcar"
 					},
 					{
-						"id": 3,
-						"name": "Sin azúcar"
+						"value": 3,
+						"label": "Sin azúcar"
 					}
 				]
 			}
 		]
 	},
 	{
-		"id": 2,
-		"name": "Desayunos",
-		"sublevels": [
+		"value": 2,
+		"label": "Desayunos",
+		"children": [
 			{
-				"id": 4,
-				"name": "Fake 1",
-				"sublevels": [
+				"value": 4,
+				"label": "Fake 1",
+				"children": [
 					{
-						"id": 5,
-						"name": "Fake 2"
+						"value": 5,
+						"label": "Fake 2"
 					},
 					{
-						"id": 6,
-						"name": "Fake 3",
-						"sublevels": [
+						"value": 6,
+						"label": "Fake 3",
+						"children": [
 							{
-								"id": 7,
-								"name": "Fake 4"
+								"value": 7,
+								"label": "Fake 4"
 							}
 						]
 					}
@@ -46,30 +46,30 @@
 		]
 	},
 	{
-		"id": 8,
-		"name": "Almuerzos",
-		"sublevels": [
+		"value": 8,
+		"label": "Almuerzos",
+		"children": [
 			{
-				"id": 9,
-				"name": "Fake 5"
+				"value": 9,
+				"label": "Fake 5"
 			},
 			{
-				"id": 10,
-				"name": "Fake 6"
+				"value": 10,
+				"label": "Fake 6"
 			}
 		]
 	},
 	{
-		"id": 11,
-		"name": "Vinos",
-		"sublevels": [
+		"value": 11,
+		"label": "Vinos",
+		"children": [
 			{
-				"id": 12,
-				"name": "Fake 8"
+				"value": 12,
+				"label": "Fake 8"
 			},
 			{
-				"id": 13,
-				"name": "Fake 9"
+				"value": 13,
+				"label": "Fake 9"
 			}
 		]
 	}
