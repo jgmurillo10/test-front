@@ -1,0 +1,53 @@
+/*template areas for the header section*/
+.header {
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  grid-template-rows: 10vh;
+  grid-template-areas: 
+    "hl hm   hm  hm   hm   hm   hm   hm   hm   hm   hm   hc";
+
+}
+.header-logo {
+  grid-area: hl;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+
+  /*position: fixed;
+  left: 7%;
+  top: 4vh;*/
+}
+.header-icon {
+  font-size: 2em;
+}
+.header-menu {
+  grid-area: hm;
+  
+}
+.header-cart {
+  grid-area: hc;
+}
+
+.header-container {
+  background-color: #fff;
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 10vh;
+}
+
+@media only screen and (max-width: 1150px) {
+    .header {
+      height: 100%;
+      display: grid;
+      /*grid-gap: 0.5em;*/
+      grid-template-columns: repeat(3,1fr);
+      grid-template-rows: 10vh 10vh;
+      grid-template-areas: 
+        "hl  hl  hc"
+        "hm  hm  hm";
+
+    }
+}

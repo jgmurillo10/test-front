@@ -37,11 +37,10 @@ export default class HeaderMenu extends Component {
     return (
       <div className="header">
         <div className="header-logo">
-          <h1>EL BARATÓN</h1>
+          <Icon className="header-icon" type="shop" />
+          <h3>EL</h3>
         </div>
-        <div className="header-search-bar">
-          <Input placeholder="Search for products" />
-        </div>
+        
         <div className="header-menu">
           <Menu
             onClick={this.handleClick}
@@ -57,6 +56,12 @@ export default class HeaderMenu extends Component {
           
            
           </Menu>
+        </div>
+        {/*<div className="header-search-bar">
+                  <Input placeholder="Search for products" />
+                </div>*/}
+        <div className="header-cart">
+          <Icon type="shopping-cart" />
         </div>
       </div>
          

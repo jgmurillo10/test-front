@@ -1,4 +1,7 @@
 @import '~antd/dist/antd.css';
+@import 'styles/header.css';
+@import 'styles/content.css';
+@import 'styles/footer.css';
 @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400');
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500');
 h1,h2,h3,h4,h5,h6 {
@@ -9,81 +12,4 @@ p,div {
   font-family: 'Roboto',sans-serif;
   font-weight: 300;
 }
-.header-container {
-  background-color: #fff;
-  z-index: 999;
-  position: fixed;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding-top: 1em;
-  height: 20vh;
-}
-/*template areas for the header section*/
-.header {
-  
-  height: 100%;
-  display: grid;
-  grid-gap: 0.5em;
-  grid-template-columns: repeat(12,1fr);
-  grid-template-rows: auto auto;
-  grid-template-areas: 
-    "hl hl hsb hsb hsb hsb hsb hsb hsb hsb hsb hsb"
-    "hl hl  hm hm  hm  hm  hm  hm  hm  hm  hm  hm";
 
-}
-.header-logo {
-  grid-area: hl;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  left: 7%;
-  top: 4vh;
-  
-
-}
-.header-search-bar {
-  grid-area: hsb;
-}
-.header-menu {
-  grid-area: hm;
-  
-}
-.content {
-  min-height: 100vh;
-  background-color: #D7F2BA;
-}
-.main-content {
-  margin-top: 20vh;
-  z-index: 9;
-}
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.card {
-  z-index: 1;
-  margin: 1em;
-}
-.footer {
-  height:10vh;
-  background-color: #676F54;
-  color: white;
-}
-
-@media only screen and (max-width: 1150px) {
-    .header {
-      height: 100%;
-      display: grid;
-      grid-gap: 0.5em;
-      grid-template-columns: repeat(3,1fr);
-      grid-template-rows: 10vh 10vh 10vh;
-      grid-template-areas: 
-        "hl  hl  hl"
-        "hsb hsb hsb"
-        "hm  hm  hm";
-
-    }
-}

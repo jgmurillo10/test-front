@@ -39,7 +39,7 @@ class App extends Component {
         
           
           <Layout>
-            <Content className="content">
+            <Content>
               <MainContent products={this.state.products}>
               </MainContent>
             </Content>
