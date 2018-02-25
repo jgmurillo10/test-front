@@ -152,7 +152,7 @@ export default class MainContent extends Component {
 									key={d.id}
 									className="card"
 								    style={{ width: 300 }}
-								    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+								    cover={<img alt="example" src="img/food-blur.png" />}
 								    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
 								  >
 								    <Meta

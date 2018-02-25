@@ -15,6 +15,7 @@ export default class HeaderMenu extends Component {
   }
   onChange = (value) => {
     console.log(value);
+    this.props.filterData(value);
   }
 
   render() {

@@ -9,7 +9,8 @@ const { Header, Footer, Content } = Layout;
 class App extends Component {
   state = {
     categories:[],
-    products:[]
+    products:[],
+    data: [],
   }
   componentDidMount(){
     this.getCategories();
@@ -24,37 +25,23 @@ class App extends Component {
   getProducts = () => {
     d3.json("data/products.json", (err,products) => {
       if(err) return;
-      this.setState({ products: products});
+      this.setState({ 
+        products: products,
+        data:products 
+      });
     })
   };
-  getSubLevels = (category) => {
-      console.log(category)
-      if(!category.sublevels){
-        return 1;
-      }
-      else{
-        category.sublevels.map((c)=>{
-          return this.getSubLevels(c)+1;
-        })
-      }
+  filterData = (ids) => {
+    let filteredProducts = this.state.data.filter((d) => {
+      return d.sublevel_id === ids[0]
+    })
+    console.log(this.state.products)
+    this.setState({
+      products:filteredProducts
+    })
 
-  };
-  getCategoriesLevels = (categories,i) => {
-    categories.forEach((c) => {
-      if(!c.level){
-        c.level = i;
-        if (c.sublevels) {
-          this.getCategoriesLevels(c.sublevels,i++);
-        }
-        else{
-          return;
-        }
-      }
-      
-    })
-    console.log(categories);
-    
   }
+
   render() {
     return (
       <div>
@@ -62,14 +49,18 @@ class App extends Component {
         
           <Header className="header-container"> 
             {this.state.categories!==0?
-            <HeaderMenu categories={this.state.categories} ></HeaderMenu>:''
+            <HeaderMenu 
+              filterData={this.filterData}
+              categories={this.state.categories} >
+            </HeaderMenu>:''
             }
           </Header>
         
           
           <Layout>
             <Content>
-              <MainContent products={this.state.products}>
+              <MainContent 
+                products={this.state.products}>
               </MainContent>
             </Content>
           </Layout>
