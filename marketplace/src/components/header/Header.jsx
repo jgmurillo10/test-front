@@ -32,7 +32,7 @@ export default class HeaderMenu extends Component {
           >
             {this.props.categories.length!==0?
               this.props.categories.map((d,i)=>{
-                  return (<Menu.Item key={d.id}>
+                  return (<Menu.Item key={i}>
 
                     <Cascader key={d.id} options={d.children} onChange={this.onChange} placeholder={d.label} />
 

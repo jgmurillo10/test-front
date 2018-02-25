@@ -1,122 +1,77 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Icon, Input, AutoComplete, Card, Slider, Checkbox, Button } from 'antd';
+import { Icon, Input, Card, Slider, Checkbox, Button, AutoComplete } from 'antd';
+import * as d3 from "d3";
 const Option = AutoComplete.Option;
 const OptGroup = AutoComplete.OptGroup;
 const { Meta } = Card;
-const dataSource = [{
-  title: '话题',
-  children: [{
-    title: 'AntDesign',
-    count: 10000,
-  }, {
-    title: 'AntDesign UI',
-    count: 10600,
-  }],
-}, {
-  title: '问题',
-  children: [{
-    title: 'AntDesign UI 有多好',
-    count: 60100,
-  }, {
-    title: 'AntDesign 是啥',
-    count: 30010,
-  }],
-}, {
-  title: '文章',
-  children: [{
-    title: 'AntDesign 是一个设计语言',
-    count: 100000,
-  }],
-}];
-const options = dataSource.map(group => (
-	  <OptGroup
-	    key={group.title}
-	    label={renderTitle(group.title)}
-	  >
-	    {group.children.map(opt => (
-	      <Option key={opt.title} value={opt.title}>
-	        {opt.title}
-	        <span className="certain-search-item-count">{opt.count} 人 关注</span>
-	      </Option>
-	    ))}
-	  </OptGroup>
-	)).concat([
-	  <Option disabled key="all" className="show-all">
-	    <a
-	      href="https://www.google.com/search?q=antd"
-	      target="_blank"
-	      rel="noopener noreferrer"
-	    >
-	      查看所有结果
-	    </a>
-	  </Option>,
-	]);
-	function renderTitle(title) {
-	  return (
-	    <span>
-	      {title}
-	      <a
-	        style={{ float: 'right' }}
-	        href="https://www.google.com/search?q=antd"
-	        target="_blank"
-	        rel="noopener noreferrer"
-	      >更多
-	      </a>
-	    </span>
-	  );
-	}
-export default class MainContent extends Component {
-	
-	Complete =() => {
-	  return (
-	    <div className="certain-category-search-wrapper" style={{ width: 250 }}>
-	      <AutoComplete
-	        className="certain-category-search"
-	        dropdownClassName="certain-category-search-dropdown"
-	        dropdownMatchSelectWidth={false}
-	        dropdownStyle={{ width: 300 }}
-	        size="large"
-	        style={{ width: '100%' }}
-	        dataSource={options}
-	        placeholder="input here"
-	        optionLabelProp="value"
-	      >
-	        <Input suffix={<Icon type="search" className="certain-category-icon" />} />
-	      </AutoComplete>
-	    </div>
-	  );
-	}
-	onChangeSlider = (value) => {
-	  console.log('onChange: ', value);
-	}
-	renderTitle = (title) => {
-	  return (
-	    <span>
-	      {title}
-	      <a
-	        style={{ float: 'right' }}
-	        href="https://www.google.com/search?q=antd"
-	        target="_blank"
-	        rel="noopener noreferrer"
-	      >更多
-	      </a>
-	    </span>
-	  );
-	}
+let names = []
 
+
+
+export default class MainContent extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+		    dataSource: [],
+		    filteredProducts: [],
+		    lastLength:0,
+		}
+	}
+	componentDidUpdate(){
+		names=[]
+	}
+	onSelect = (value) => {
+	  console.log('onSelect', value);
+	  this.props.filterByName(value);
+	}
+	handleSearch = (value) => {
+	    console.log(value)
+	    this.props.filterByName(value);
+	  }
+	onChangeSlider = (value) => {
+	  this.props.filterByPrice(value);
+	}
+	formatter = (value) => {
+	  return `$${value}`;
+	}
+	onChangeSliderStock = (value) => {
+	  console.log('onChangeStock: ', value);
+	  this.props.filterByStock(value);
+	}
+	
 	onAfterChangeSlider = (value) => {
+	  console.log('onAfterChange: ', value);
+	}
+	onAfterChangeSliderStock = (value) => {
 	  console.log('onAfterChange: ', value);
 	}
 	onChangeCheckBox = (e) => {
 	  console.log(`checked = ${e.target.checked}`);
+	  this.props.filterAvailable(e.target.checked);
 	}
 	render(){
+		// const marks = {
+		//   this.props.min: `${this.props.min}`,
+		//   this.props.max: `${this.props.max}`
+		// };
+		const { dataSource } = this.state;
+		this.props.products.map(p=>{
+			names.push(p.name);
+		})
 		return (
 				<div className="main-content">
 
 					<div className="main-search">
-						{this.Complete()}
+						<AutoComplete
+					        dataSource={names}
+					        style={{ width: 200 }}
+					        onSelect={this.onSelect}
+					        onSearch={this.handleSearch}
+					        placeholder="Search products"
+					     >
+					       <Input suffix={<Icon type="search" />} />
+					     </AutoComplete>
 
 					</div>
 					<div className="main-filter">
@@ -129,15 +84,15 @@ export default class MainContent extends Component {
 								
 							 </Card>
 						</div>
-						<div className="mail-filter-filer">
+						<div className="main-filter-filter">
 
 							<Card title="Filtrar resultados"  style={{  }}>
 							   	<p>Disponibilidad</p>
-								<Checkbox onChange={this.onChangeSlider}>Mostrar disponibles (#)</Checkbox>
+								<Checkbox onChange={this.onChangeCheckBox}>Mostrar disponibles ({this.props.number_available} de {this.props.products.length})</Checkbox>
 								<p>Precio</p>
-								<Slider range step={10} defaultValue={[20, 50]} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
+								<Slider tipFormatter={this.formatter}  range min={this.props.minPrice} max={this.props.maxPrice} step={10} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
 								<p>Cantidad en stock</p>
-								<Slider defaultValue={30} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
+								<Slider defaultValue={[0,300]} range min={this.props.minQuantity} max={this.props.maxQuantity} step={1} onChange={this.onChangeSliderStock} onAfterChange={this.onAfterChangeSliderStock} />
 
 							 </Card>
 							
