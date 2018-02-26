@@ -13,15 +13,19 @@ class App extends Component {
     data: [],
     availableProducts: [],
     number_available: 0,
-    cart_products: []
+    cart_products: [],
+
   }
   componentDidMount(){
     this.getCategories();
     this.getProducts();
   }
   addCartProduct = (product,quantity) => {
+    let totalCost = quantity * Number(product.price.replace("$","").replace(",",""));
     console.log("addCartProduct")
     product.order = quantity; 
+    product.totalCost = totalCost
+    console.log(product);
     this.state.cart_products.push(product)
   }
   removeCartProducts = () => {

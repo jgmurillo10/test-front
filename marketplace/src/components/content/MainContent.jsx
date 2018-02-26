@@ -15,6 +15,7 @@ export default class MainContent extends Component {
 		    confirmLoading: false,
 		    maxUnits:1,
 		    product:{},
+		    units:0,
 		}
 	}
 	componentDidUpdate(){
@@ -29,7 +30,9 @@ export default class MainContent extends Component {
 	    this.props.filterByName(value);
 	}
 	onChange = (value) => {
-	  console.log('changed', value);
+	  this.setState({
+	  	units:value,
+	  })
 	}
 
 	showModal = () => {
@@ -42,7 +45,7 @@ export default class MainContent extends Component {
 	    ModalText: 'Agregando al carrito',
 	    confirmLoading: true,
 	  });
-	  this.props.addCartProduct(this.state.product)
+	  this.props.addCartProduct(this.state.product, this.state.units)
 	  setTimeout(() => {
 	    this.setState({
 	      visible: false,
@@ -60,9 +63,9 @@ export default class MainContent extends Component {
 	  message.warning('Este producto no está disponible');
 	};
 	handleAddProductCart = (e) => {
-
 		console.log(e)
 		if(e.available){
+			
 			this.setState({
 				ModalText: `Vas a agregar ${e.name} a tu carrito. Hay ${e.quantity} unidades disponibles. Por favor ingresa el número de unidades que deseas agregar`,
 				maxUnits: e.quantity,
@@ -131,6 +134,7 @@ export default class MainContent extends Component {
 				          confirmLoading={confirmLoading}
 				          onCancel={this.handleCancel}
 				        >
+				          <img className="img-modal" alt="example" src="img/food-blur.png" />
 				          <p>{ModalText}</p>
 				           <InputNumber type="number" min={1} max={maxUnits} defaultValue={1} onChange={this.onChange} />
 				        </Modal>
