@@ -37,6 +37,7 @@ export default class MainContent extends Component {
 	}
 	onChangeSliderStock = (value) => {
 	  console.log('onChangeStock: ', value);
+	 
 	  this.props.filterByStock(value);
 	}
 	

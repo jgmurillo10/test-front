@@ -13,10 +13,20 @@ class App extends Component {
     data: [],
     availableProducts: [],
     number_available: 0,
+    cart_products: ["leche","huevos","harina"]
   }
   componentDidMount(){
     this.getCategories();
     this.getProducts();
+  }
+  addCartProduct = (product) => {
+    this.state.cart_products.push(product)
+  }
+  removeCartProducts = () => {
+    console.log("remove cart_products")
+    this.setState({
+      cart_products: [],
+    })
   }
   getCategories = () => {
     d3.json("data/categories.json", (err,categories) => {
@@ -154,6 +164,8 @@ class App extends Component {
           <Header className="header-container"> 
             {this.state.categories!==0?
             <HeaderMenu 
+              removeCartProducts={this.removeCartProducts}
+              cart_products={this.state.cart_products}
               filterData={this.filterData}
               categories={this.state.categories} >
             </HeaderMenu>:''
