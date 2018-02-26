@@ -13,14 +13,15 @@ class App extends Component {
     data: [],
     availableProducts: [],
     number_available: 0,
-    cart_products: ["leche","huevos","harina"]
+    cart_products: []
   }
   componentDidMount(){
     this.getCategories();
     this.getProducts();
   }
-  addCartProduct = (product) => {
+  addCartProduct = (product,quantity) => {
     console.log("addCartProduct")
+    product.order = quantity; 
     this.state.cart_products.push(product)
   }
   removeCartProducts = () => {

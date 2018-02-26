@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Icon, Card } from 'antd';
+import { Icon, Card, Modal, Button, InputNumber, message } from 'antd';
 import Filter from "./Filter.jsx";
 const { Meta } = Card;
 let names = []
@@ -10,6 +10,11 @@ export default class MainContent extends Component {
 		this.state = {
 		    filteredProducts: [],
 		    lastLength:0,
+		    ModalText: 'Content of the modal',
+		    visible: false,
+		    confirmLoading: false,
+		    maxUnits:1,
+		    product:{},
 		}
 	}
 	componentDidUpdate(){
@@ -23,14 +28,59 @@ export default class MainContent extends Component {
 	    console.log(value)
 	    this.props.filterByName(value);
 	}
-	addCartProduct = (e) => {
-		console.log(e.target.value)
+	onChange = (value) => {
+	  console.log('changed', value);
+	}
+
+	showModal = () => {
+	  this.setState({
+	    visible: true,
+	  });
+	}
+	handleOk = () => {
+	  this.setState({
+	    ModalText: 'Agregando al carrito',
+	    confirmLoading: true,
+	  });
+	  this.props.addCartProduct(this.state.product)
+	  setTimeout(() => {
+	    this.setState({
+	      visible: false,
+	      confirmLoading: false,
+	    });
+	  }, 1000);
+	}
+	handleCancel = () => {
+	  console.log('Clicked cancel button');
+	  this.setState({
+	    visible: false,
+	  });
+	}
+	warning = () => {
+	  message.warning('Este producto no está disponible');
+	};
+	handleAddProductCart = (e) => {
+
+		console.log(e)
+		if(e.available){
+			this.setState({
+				ModalText: `Vas a agregar ${e.name} a tu carrito. Hay ${e.quantity} unidades disponibles. Por favor ingresa el número de unidades que deseas agregar`,
+				maxUnits: e.quantity,
+				product: e,
+			})
+			this.showModal();
+		}else{
+			this.warning();
+		}
+
 	}
 	render(){
+
 		// const marks = {
 		//   this.props.min: `${this.props.min}`,
 		//   this.props.max: `${this.props.max}`
 		// };
+		const { visible, confirmLoading, ModalText, maxUnits } = this.state;
 		this.props.products.forEach(p=>{
 			names.push(p.name);
 		})
@@ -61,7 +111,7 @@ export default class MainContent extends Component {
 									className="card"
 								    style={{ width: 300 }}
 								    cover={<img alt="example" src="img/food-blur.png" />}
-								    actions={[<Icon product={d.id} onClick={()=>this.props.addCartProduct(d)} type="plus-circle-o" />, <Icon type="ellipsis" />]}
+								    actions={[<Icon product={d.id} onClick={()=>this.handleAddProductCart(d)} type="plus-circle-o" />, <Icon type="ellipsis" />]}
 								  >
 								    <Meta
 								      title={d.name}
@@ -74,6 +124,17 @@ export default class MainContent extends Component {
 							)
 					})}
 					</div>
+					<div>
+						<Modal title="Agregar al carrito"
+				          visible={visible}
+				          onOk={this.handleOk}
+				          confirmLoading={confirmLoading}
+				          onCancel={this.handleCancel}
+				        >
+				          <p>{ModalText}</p>
+				           <InputNumber type="number" min={1} max={maxUnits} defaultValue={1} onChange={this.onChange} />
+				        </Modal>
+				    </div>
 				</div>
 			);
 	};
