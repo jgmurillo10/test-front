@@ -101,7 +101,7 @@ class App extends Component {
   filterByPrice = (values) => {
     let filteredProducts = this.state.data.filter((d) =>{
       let p = Number(d.price.replace("$","").replace(",",""))
-      return p >= values[0] && p <= values  [1]
+      return p >= values[0] && p <= values[1]
     })
     this.setState({
       products: filteredProducts,

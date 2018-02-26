@@ -42,8 +42,8 @@ export default class Cart extends Component {
 			        	<h2>Productos</h2>
 			        	{this.props.cart_products.length !== 0 ?
 
-			        		this.props.cart_products.map(p=>{
-			        			return <p>{p.name}</p>
+			        		this.props.cart_products.map((p,i)=>{
+			        			return <p key={i}>{p.name}</p>
 			        		})
 			        		:
 			        		<p>No has agregado nada a tu carrito</p>

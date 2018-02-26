@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Menu, Icon, Cascader, Input } from "antd";
+import { Menu, Icon, Cascader } from "antd";
 import PropTypes from "prop-types";
 import Cart from "./Cart.jsx";
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 export default class HeaderMenu extends Component {
   componentDidMount(){
 
