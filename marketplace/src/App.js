@@ -20,6 +20,7 @@ class App extends Component {
     this.getProducts();
   }
   addCartProduct = (product) => {
+    console.log("addCartProduct")
     this.state.cart_products.push(product)
   }
   removeCartProducts = () => {
@@ -176,6 +177,7 @@ class App extends Component {
           <Layout>
             <Content>
               <MainContent
+                addCartProduct={this.addCartProduct}
                 minPrice={this.state.minPrice}
                 maxPrice={this.state.maxPrice}
                 minQuantity={this.state.minQuantity}

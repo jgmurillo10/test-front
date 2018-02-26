@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Icon, Input, Card, Slider, Checkbox, Button, AutoComplete } from 'antd';
+import { Icon, Input, Card, Slider, Checkbox, Button, AutoComplete, Modal } from 'antd';
 import * as d3 from "d3";
 const Option = AutoComplete.Option;
 const OptGroup = AutoComplete.OptGroup;
@@ -50,6 +50,9 @@ export default class MainContent extends Component {
 	onChangeCheckBox = (e) => {
 	  console.log(`checked = ${e.target.checked}`);
 	  this.props.filterAvailable(e.target.checked);
+	}
+	addCartProduct = (e) => {
+		console.log(e.target.value)
 	}
 	render(){
 		// const marks = {
@@ -110,7 +113,7 @@ export default class MainContent extends Component {
 									className="card"
 								    style={{ width: 300 }}
 								    cover={<img alt="example" src="img/food-blur.png" />}
-								    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+								    actions={[<Icon product={d.id} onClick={()=>this.props.addCartProduct(d)} type="plus-circle-o" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
 								  >
 								    <Meta
 								      title={d.name}
