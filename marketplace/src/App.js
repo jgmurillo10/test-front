@@ -14,6 +14,7 @@ class App extends Component {
     availableProducts: [],
     number_available: 0,
     cart_products: [],
+    grandTotal:0,
 
   }
   componentDidMount(){
@@ -25,6 +26,10 @@ class App extends Component {
     console.log("addCartProduct")
     product.order = quantity; 
     product.totalCost = totalCost
+    this.setState({
+      grandTotal: this.state.grandTotal+=totalCost
+    })
+    product.totalCostFormat = "$"+totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     console.log(product);
     this.state.cart_products.push(product)
   }
@@ -170,6 +175,7 @@ class App extends Component {
           <Header className="header-container"> 
             {this.state.categories!==0?
             <HeaderMenu 
+              grandTotal={this.state.grandTotal}
               removeCartProducts={this.removeCartProducts}
               cart_products={this.state.cart_products}
               filterData={this.filterData}

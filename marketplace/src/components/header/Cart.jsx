@@ -1,10 +1,28 @@
 import React, { Component } from "react";
-import { Icon, Modal, Button } from "antd";
-
+import { Icon, Modal, Button, Divider, Table, notification } from "antd";
+const columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+  key: 'name',
+  render: text => <a href="#">{text}</a>,
+}, {
+  title: 'Price',
+  dataIndex: 'price',
+  key: 'price',
+}, {
+  title: 'Units',
+  dataIndex: 'order',
+  key: 'order',
+},{
+  title: 'Total',
+  dataIndex: 'totalCostFormat',
+  key: 'totalCostFormat',
+}];
 export default class Cart extends Component {
 	state = {
 	    loading: false,
 	    visible: false,
+	    grandTotal: 0,
 	}
 	showModal = () => {
 	    this.setState({
@@ -17,10 +35,18 @@ export default class Cart extends Component {
 	  setTimeout(() => {
 	    this.setState({ loading: false, visible: false });
 	  }, 1000);
+	  this.openNotificationWithIcon('success',"Has comprado todos los elementos de tu carrito, vuelve pronto.")
+
 	}
 	handleCancel = () => {
 	  this.setState({ visible: false });
 	}
+	openNotificationWithIcon = (type,msg) => {
+	  notification[type]({
+	    message: 'Hey',
+	    description: msg,
+	  });
+	};
 	render(){
 		const { visible, loading } = this.state;
 		let disabled = this.props.cart_products.length === 0 ? true : false;
@@ -42,14 +68,10 @@ export default class Cart extends Component {
 			        	<h2>Productos</h2>
 			        	{this.props.cart_products.length !== 0 ?
 
-			        		this.props.cart_products.map((p,i)=>{
-			        			return 	(<div key={i}>
-
-			        						<p>{p.name}</p>
-			        						<p>{p.order}</p>
-			        						<p>{`${p.totalCost}`}</p>
-			        					</div>)
-			        		})
+			        		<div>
+				        		<Table columns={columns} dataSource={this.props.cart_products} />
+				        		<p>{`Costo total $${this.props.grandTotal.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}`}</p>
+			        		</div>
 			        		:
 			        		<p>No has agregado nada a tu carrito</p>
 			        	}

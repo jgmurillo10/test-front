@@ -46,6 +46,7 @@ export default class HeaderMenu extends Component {
         </div>
         <div className="header-cart">
             <Cart
+              grandTotal={this.props.grandTotal}
               removeCartProducts={this.props.removeCartProducts}
               cart_products={this.props.cart_products}
             />

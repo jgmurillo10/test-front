@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Icon, Card, Modal, Button, InputNumber, message } from 'antd';
+import { Icon, Card, Modal, Button, InputNumber, notification } from 'antd';
 import Filter from "./Filter.jsx";
 const { Meta } = Card;
 let names = []
+
 export default class MainContent extends Component {
 	constructor(props){
 		super(props)
@@ -15,7 +16,7 @@ export default class MainContent extends Component {
 		    confirmLoading: false,
 		    maxUnits:1,
 		    product:{},
-		    units:0,
+		    units:1,
 		}
 	}
 	componentDidUpdate(){
@@ -52,6 +53,8 @@ export default class MainContent extends Component {
 	      confirmLoading: false,
 	    });
 	  }, 1000);
+
+	  this.openNotificationWithIcon('success',"El producto fue agregado correctamente a tu carrito.")
 	}
 	handleCancel = () => {
 	  console.log('Clicked cancel button');
@@ -59,8 +62,11 @@ export default class MainContent extends Component {
 	    visible: false,
 	  });
 	}
-	warning = () => {
-	  message.warning('Este producto no está disponible');
+	openNotificationWithIcon = (type,msg) => {
+	  notification[type]({
+	    message: 'Hey',
+	    description: msg,
+	  });
 	};
 	handleAddProductCart = (e) => {
 		console.log(e)
@@ -73,7 +79,7 @@ export default class MainContent extends Component {
 			})
 			this.showModal();
 		}else{
-			this.warning();
+			this.openNotificationWithIcon('warning',"Este producto no está disponible.")
 		}
 
 	}
@@ -113,7 +119,7 @@ export default class MainContent extends Component {
 									key={d.id}
 									className="card"
 								    style={{ width: 300 }}
-								    cover={<img alt="example" src="img/food-blur.png" />}
+								    cover={<img className="card-image" alt="example" src="img/package.jpg" />}
 								    actions={[]}
 								  >
 								    <Meta
@@ -136,9 +142,16 @@ export default class MainContent extends Component {
 				          confirmLoading={confirmLoading}
 				          onCancel={this.handleCancel}
 				        >
-				          <img className="img-modal" alt="example" src="img/food-blur.png" />
-				          <p>{ModalText}</p>
-				           <InputNumber type="number" min={1} max={maxUnits} defaultValue={1} onChange={this.onChange} />
+				        	<div className="modal-add">
+				        		<div>
+				        			<img className="modal-img" alt="example" src="img/package.jpg" />
+				        		</div>
+				        		<div>
+						          	<p>{ModalText}</p>
+						           	<InputNumber type="number" min={1} max={maxUnits} defaultValue={1} onChange={this.onChange} />
+				        		</div>
+				        		
+				        	</div>
 				        </Modal>
 				    </div>
 				</div>
