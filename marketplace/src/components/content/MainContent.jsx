@@ -114,7 +114,7 @@ export default class MainContent extends Component {
 									className="card"
 								    style={{ width: 300 }}
 								    cover={<img alt="example" src="img/food-blur.png" />}
-								    actions={[<Icon product={d.id} onClick={()=>this.handleAddProductCart(d)} type="plus-circle-o" />, <Icon type="ellipsis" />]}
+								    actions={[]}
 								  >
 								    <Meta
 								      title={d.name}
@@ -122,6 +122,8 @@ export default class MainContent extends Component {
 								    />
 								    {"quantity "+d.quantity}
 								    {"available "+d.available}
+
+								    <Icon className="card-add" product={d.id} onClick={()=>this.handleAddProductCart(d)} type="shopping-cart" />
 								  </Card>
 
 							)
