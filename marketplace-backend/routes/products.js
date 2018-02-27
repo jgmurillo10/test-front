@@ -10,6 +10,50 @@ router.get('/', function(req, res, next) {
   // And insert something like this instead:
   res.json(products);
 });
+router.get('/:id', function(req, res, next) {
+  // Comment out this line:
+  //res.send('respond with a resource');
+  let product;
+  // And insert something like this instead:
+    products.forEach(p => {
+    if(p.id === req.params.id) {
+      product=p;
+    }
+
+  })
+  res.json(product);
+});
+router.get('/sublevel/:id_sublevel', function(req, res, next) {
+  // Comment out this line:
+  //res.send('respond with a resource');
+  let resP = [];
+  // And insert something like this instead:
+    products.forEach(p => {
+    if(p.sublevel_id == req.params.id_sublevel) {
+      if(req.query.min_price && req.query.max_price ){
+        console.log('yes')
+        let price = Number(p.price.replace("$","").replace(",",""));
+        if(price>=req.query.min_price && price<=req.query.max_price){
+          
+          if(req.query.min_quantity && req.query.max_quantity){
+            let quantity = p.quantity;
+            if(quantity>=req.query.min_quantity && quantity<=req.query.max_quantity){
+              resP.push(p);
+            }
+          }else{
+            resP.push(p);
+          }
+        }
+      }
+      else{
+        resP.push(p);  
+      }
+      
+    }
+  })
+
+  res.json(resP);
+});
 router.get('/available', function(req, res, next) {
   // Comment out this line:
   //res.send('respond with a resource');
