@@ -23,9 +23,6 @@ class App extends Component {
     fetch('/categories')
       .then(res => res.json())
       .then(categories => this.setState({ categories }));
-    fetch('/products')
-      .then(res => res.json())
-      .then(products => this.setState({ products, data:products }));
     // fetch('/products/available')
     //   .then(res => res.json())
     //   .then(availableProducts => this.setState({ 
@@ -151,6 +148,12 @@ class App extends Component {
     })
   }
   
+
+  setData = (sublevel_id) =>{
+      fetch(`/products/sublevel/${sublevel_id}`)
+        .then(res => res.json())
+        .then(products => this.setState({ products }));
+  }
   
   render() {
     return (
@@ -160,6 +163,7 @@ class App extends Component {
           <Header className="header-container"> 
             {this.state.categories!==0?
             <HeaderMenu 
+              setData={this.setData}
               grandTotal={this.state.grandTotal}
               removeCartProducts={this.removeCartProducts}
               cart_products={this.state.cart_products}
@@ -172,7 +176,8 @@ class App extends Component {
           
           <Layout>
             <Content>
-              <MainContent
+              {this.state.products.length !== 0 ?
+                <MainContent
                 addCartProduct={this.addCartProduct}
                 minPrice={this.state.minPrice}
                 maxPrice={this.state.maxPrice}
@@ -189,6 +194,15 @@ class App extends Component {
                 orderByA={this.orderByAvailibity}
                 products={this.state.products}>
               </MainContent>
+              :
+              <div className="banner">
+
+                Bienvenido a tu tienda, para ver nuestros productos selecciona una categoría en el menú superior.
+
+              </div>
+
+              }
+              
             </Content>
           </Layout>
           <Footer className="footer"> 
