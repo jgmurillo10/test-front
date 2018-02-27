@@ -26,14 +26,24 @@ class App extends Component {
     fetch('/products')
       .then(res => res.json())
       .then(products => this.setState({ products, data:products }));
-    fetch('/products/available')
+    // fetch('/products/available')
+    //   .then(res => res.json())
+    //   .then(availableProducts => this.setState({ 
+    //     availableProducts,
+    //     number_available: availableProducts.length,
+    //     }));
+    fetch('/products/min/price')
       .then(res => res.json())
-      .then(availableProducts => this.setState({ 
-        availableProducts,
-        number_available: availableProducts.length,
-        }));
-      
-
+      .then(minPrice => this.setState({ minPrice }));
+    fetch('/products/max/price')
+      .then(res => res.json())
+      .then(maxPrice => this.setState({ maxPrice }));
+    fetch('/products/min/quantity')
+      .then(res => res.json())
+      .then(minQuantity => this.setState({ minQuantity }));
+    fetch('/products/max/quantity')
+      .then(res => res.json())
+      .then(maxQuantity => this.setState({ maxQuantity }));
     
   }
   addCartProduct = (product,quantity) => {
@@ -54,40 +64,6 @@ class App extends Component {
       cart_products: [],
     })
   }
-  getMinMaxPrice = () => {
-
-    let maxPrice = ( d3.max(this.state.data.map(function(d){return Number(d.price.replace("$","").replace(",",""));})) );
-    let minPrice = ( d3.min(this.state.data.map(function(d){return Number(d.price.replace("$","").replace(",",""));})) );
-    this.setState({
-      minPrice: minPrice,
-      maxPrice: maxPrice,
-    })
-  }
-  getMinMaxQuantity = () => {
-    let maxQuantity = ( d3.max(this.state.data.map(function(d){return d.quantity;})) );
-    let minQuantity = ( d3.min(this.state.data.map(function(d){return d.quantity;})) );
-    this.setState({
-      minQuantity: minQuantity,
-      maxQuantity: maxQuantity,
-    })
-  }
-  getProducts = () => {
-    d3.json("data/products.json", (err,products) => {
-      if(err) return;
-      let availableProducts = products.filter((d) => {
-        return d.available === true
-      })
-      
-      this.setState({ 
-        products: products,
-        data:products,
-        availableProducts: availableProducts,
-        number_available: availableProducts.length,
-      });
-      this.getMinMaxPrice();
-      this.getMinMaxQuantity();
-    })
-  };
   filterData = (ids) => {
     let filteredProducts = this.state.data.filter((d) => {
       return d.sublevel_id === ids[ids.length-1]
