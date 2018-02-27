@@ -45,6 +45,18 @@ router.get('/:id', function(req, res, next) {
   })
   res.json(product);
 });
+router.get('/sublevel/:id_sublevel/available',function(req,res,next) {
+  let response = [];
+  products.forEach(p=>{
+    if (p.sublevel_id==req.params.id_sublevel) {
+      if (p.available) {
+        response.push(p);
+      }
+    }
+  })
+
+  res.json(response);
+});
 router.get('/sublevel/:id_sublevel', function(req, res, next) {
   // Comment out this line:
   //res.send('respond with a resource');
@@ -127,16 +139,25 @@ router.get('/sublevel/:id/order', function(req,res,next) {
     res.json(sorted);  
   }
 });
-
+router.get('/able',function(req,res,next) {
+  console.log('products/available')
+  let availableProducts = products.filter((d) => {
+        return d.available == true
+      })
+  console.log(availableProducts)
+  res.json(products);
+});
 router.get('/available', function(req, res, next) {
   // Comment out this line:
   //res.send('respond with a resource');
 
   // And insert something like this instead:
+  console.log('products/available')
   let availableProducts = products.filter((d) => {
         return d.available === true
       })
-  res.json(availableProducts);
+  console.log(availableProducts)
+  res.json(products);
 });
 router.get('/min/price', function(req,res,next) {
 
