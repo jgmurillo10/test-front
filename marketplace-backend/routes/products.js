@@ -1,7 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var products = require('../public/data/products.json');
+products.forEach(p=>{
+  p.price = Number(p.price.replace("$","").replace(",",""));
+})
+const https = require("https");
+const url =
+  "https://localhost:3001";
+function sortByKey(array, key,parseNumber){
 
+  console.log(parseNumber)
+  return array.sort(function(a, b) {
+    var x,y;
+    x = a[key];
+    y = b[key];
+    if(parseNumber){
+      x = Number(a[key].replace("$","").replace(",",""));
+      y = Number(b[key].replace("$","").replace(",",""));
+      console.log(x,y)
+    }
+    
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    
+  });
+}
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	// Comment out this line:
@@ -54,6 +76,58 @@ router.get('/sublevel/:id_sublevel', function(req, res, next) {
 
   res.json(resP);
 });
+router.get('/sublevel/:id_sublevel/stats/max',function(req,res,next) {
+
+  let res_array = [];
+  products.forEach(p => {
+    if(p.sublevel_id == req.params.id_sublevel) {
+        res_array.push(p)
+    }
+  })
+
+  let max = res_array[0];
+  res_array.forEach((p)=>{
+    if(p[req.query.attribute]>max[req.query.attribute]){
+      max=p;
+    }
+  })
+
+  res.json(max);
+});
+router.get('/sublevel/:id_sublevel/stats/min',function(req,res,next) {
+  let res_array = [];
+  products.forEach(p => {
+    if(p.sublevel_id == req.params.id_sublevel) {
+        res_array.push(p)
+    }
+  })
+
+  let min = res_array[0];
+  res_array.forEach((p)=>{
+    if(p[req.query.attribute]<min[req.query.attribute]){
+      min=p;
+    }
+  })
+
+  res.json(min);
+});
+router.get('/sublevel/:id/order', function(req,res,next) {
+  let res_array = [];
+  products.forEach(p => {
+    if(p.sublevel_id == req.params.id) {
+      res_array.push(p)
+  }
+  })
+  console.log(res_array)
+  let sorted = sortByKey(res_array,req.query.by,req.query.parseNumber);
+  if(req.query.desc){
+    res.json(sorted.reverse());
+  }
+  else{
+    res.json(sorted);  
+  }
+});
+
 router.get('/available', function(req, res, next) {
   // Comment out this line:
   //res.send('respond with a resource');
