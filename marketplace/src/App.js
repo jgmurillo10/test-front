@@ -15,11 +15,26 @@ class App extends Component {
     number_available: 0,
     cart_products: [],
     grandTotal:0,
+    users:[],
 
   }
   componentDidMount(){
-    this.getCategories();
-    this.getProducts();
+    // this.getProducts();
+    fetch('/categories')
+      .then(res => res.json())
+      .then(categories => this.setState({ categories }));
+    fetch('/products')
+      .then(res => res.json())
+      .then(products => this.setState({ products, data:products }));
+    fetch('/products/available')
+      .then(res => res.json())
+      .then(availableProducts => this.setState({ 
+        availableProducts,
+        number_available: availableProducts.length,
+        }));
+      
+
+    
   }
   addCartProduct = (product,quantity) => {
     let totalCost = quantity * Number(product.price.replace("$","").replace(",",""));
@@ -37,12 +52,6 @@ class App extends Component {
     console.log("remove cart_products")
     this.setState({
       cart_products: [],
-    })
-  }
-  getCategories = () => {
-    d3.json("data/categories.json", (err,categories) => {
-      if (err) {return};
-      this.setState({ categories: categories });
     })
   }
   getMinMaxPrice = () => {
@@ -206,7 +215,9 @@ class App extends Component {
               </MainContent>
             </Content>
           </Layout>
-          <Footer className="footer">El Baratón </Footer>
+          <Footer className="footer"> 
+            El Baratón
+          </Footer>
         </Layout>
       </div>    
     );
