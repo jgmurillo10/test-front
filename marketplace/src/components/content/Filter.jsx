@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { AutoComplete, Input, Icon, Button, Card, Slider, Checkbox } from 'antd';
 export default class Filter extends Component {
-
+	state = {
+		selected: 'caret-',
+	}
+	handleClick = (key,attr,desc) => {
+		this.props.orderBy(attr,desc);
+		this.setState({key:key});
+	}
 	onChangeSlider = (value) => {
 	  this.props.filterByPrice(value);
 	}
@@ -23,6 +29,7 @@ export default class Filter extends Component {
 	  console.log(`checked = ${e.target.checked}`);
 	  this.props.filterAvailable(e.target.checked);
 	}
+
 	render(){
 		return(
 			<div>
@@ -46,8 +53,8 @@ export default class Filter extends Component {
 											<p>Precio</p>
 										</div>
 										<div>
-										    <Icon onClick={()=>this.props.orderBy("price",false)} className="dimension-button" type="down" />
-										    <Icon onClick={()=>this.props.orderBy("price",true)} className="dimension-button" type="up" />
+										    <Icon key={1} onClick={()=>this.handleClick(1,"price",false)} className="dimension-button" type={`${this.state.key==1?this.state.selected:""}down`} />
+										    <Icon key={2} onClick={()=>this.handleClick(2,"price",true)} className="dimension-button" type={`${this.state.key==2?this.state.selected:""}up`}  />
 									    </div>
 									</div>
 
@@ -56,8 +63,8 @@ export default class Filter extends Component {
 											<p>Disponibilidad</p>
 										</div>
 										<div>
-										    <Icon onClick={()=>this.props.orderBy("available",false)} className="dimension-button" type="down" />
-										    <Icon onClick={()=>this.props.orderBy("available",true)} className="dimension-button" type="up" />
+										    <Icon key={3} onClick={()=>this.handleClick(3,"available",false)} className="dimension-button" type={`${this.state.key==3?this.state.selected:""}down`} />
+										    <Icon key={4} onClick={()=>this.handleClick(4,"available",true)} className="dimension-button" type={`${this.state.key==4?this.state.selected:""}up`} />
 									    </div>
 									</div>
 									<div className="dimension">
@@ -65,8 +72,8 @@ export default class Filter extends Component {
 											<p>Cantidad</p>
 										</div>
 										<div>
-										    <Icon onClick={()=>this.props.orderBy("quantity",false)} className="dimension-button" type="down" />
-										    <Icon onClick={()=>this.props.orderBy("quantity",true)} className="dimension-button" type="up" />
+										    <Icon key={5} onClick={()=>this.handleClick(5,"quantity",false)} className="dimension-button" type={`${this.state.key==5?this.state.selected:""}down`} />
+										    <Icon key={6} onClick={()=>this.handleClick(6,"quantity",true)} className="dimension-button" type={`${this.state.key==6?this.state.selected:""}up`}  />
 									    </div>
 									</div>
 									<div className="dimension">
@@ -74,8 +81,8 @@ export default class Filter extends Component {
 											<p>Nombre</p>
 										</div>
 										<div>
-										    <Icon onClick={()=>this.props.orderBy("name",false)} className="dimension-button" type="down" />
-										    <Icon onClick={()=>this.props.orderBy("name",true)} className="dimension-button" type="up" />
+										    <Icon key={7} onClick={()=>this.handleClick(7,"name",false)} className="dimension-button" type={`${this.state.key==7?this.state.selected:""}down`} />
+										    <Icon key={8} onClick={()=>this.handleClick(8,"name",true)} className="dimension-button" type={`${this.state.key==8?this.state.selected:""}up`} />
 									    </div>
 									</div>
 									
