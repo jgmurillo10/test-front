@@ -80,11 +80,13 @@
   filter: blur(10px);
 }
 .banner {
-  display: grid;
+  display: flex;
   min-height: 82vh;
   background-color: #D7F2BA;
   margin-top: 8vh;
   z-index: 9;
+  justify-content: center;
+  align-items: center;
 }
 .dimension {
   display: flex;
@@ -98,10 +100,8 @@
   border-radius: 50%;
   background-color: rgba(0,0,0,0.1);
   cursor: pointer;
-  margin-left: 1em;
   font-size: 1em;
-  padding-right: 0.2em;
-  padding-left: 0.2em;
+  padding: 0.2em;
 }
 .dimension-label {
   margin-right: 1em;

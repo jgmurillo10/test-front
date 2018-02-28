@@ -168,8 +168,9 @@ class App extends Component {
               </MainContent>
               :
               <div className="banner">
-
-                Bienvenido a tu tienda, para ver nuestros productos selecciona una categoría en el menú superior.
+                <h1>Bienvenido a tu tienda,</h1>
+                <h3>para ver nuestros productos selecciona una categoría en el menú superior.</h3>
+                 
 
               </div>
 
@@ -178,7 +179,7 @@ class App extends Component {
             </Content>
           </Layout>
           <Footer className="footer"> 
-            El Baratón
+            <div>El Baratón</div>
           </Footer>
         </Layout>
       </div>    
