@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Icon, Card, Modal, Button, InputNumber, notification } from 'antd';
+import { Icon, Card, Modal, InputNumber, notification } from 'antd';
 import Filter from "./Filter.jsx";
 const { Meta } = Card;
 let names = []
@@ -97,10 +97,12 @@ export default class MainContent extends Component {
 				<div className="main-content">
 
 					<Filter
-						filterByPrice={this.props.filterByPrice}
+						filterBy={this.props.filterBy}
 						filterAvailable={this.props.filterAvailable}
-						filterByStock={this.props.filterByStock}
-
+						minPrice={this.props.minPrice}
+						maxPrice={this.props.maxPrice}
+						minQuantity={this.props.minQuantity}
+						maxQuantity={this.props.maxQuantity}
 						orderBy={this.props.orderBy}
 						names={this.names}
 						number_available={this.props.number_available}

@@ -3,7 +3,6 @@ import { Layout } from "antd";
 import "./App.css";
 import HeaderMenu from "./components/header/Header.jsx";
 import MainContent from "./components/content/MainContent.jsx";
-import * as d3 from "d3";
 const { Header, Footer, Content } = Layout;
 
 class App extends Component {
@@ -43,12 +42,13 @@ class App extends Component {
     
   }
   addCartProduct = (product,quantity) => {
-    let totalCost = quantity * Number(product.price.replace("$","").replace(",",""));
+    let totalCost = quantity * product.price;
     console.log("addCartProduct")
     product.order = quantity; 
     product.totalCost = totalCost
+    let actual_cost = this.state.grandTotal;
     this.setState({
-      grandTotal: this.state.grandTotal+=totalCost
+      grandTotal: actual_cost+=totalCost,
     })
     product.totalCostFormat = "$"+totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     console.log(product);
@@ -59,15 +59,6 @@ class App extends Component {
     this.setState({
       cart_products: [],
     })
-  }
-  filterData = (ids) => {
-    let filteredProducts = this.state.data.filter((d) => {
-      return d.sublevel_id === ids[ids.length-1]
-    })
-    this.setState({
-      products:filteredProducts
-    })
-
   }
   filterByName = (name) => {
       let filteredProducts = this.state.products.filter((d) => {
@@ -91,23 +82,14 @@ class App extends Component {
     }
 
   }
-  filterByPrice = (values) => {
-    let filteredProducts = this.state.data.filter((d) =>{
-      let p = Number(d.price.replace("$","").replace(",",""))
-      return p >= values[0] && p <= values[1]
-    })
-    this.setState({
-      products: filteredProducts,
-    })
+  filterBy = (values_price, values_quantities) => {
+    let query = `/products/sublevel/${this.state.sublevel_id}?min_price=${values_price[0]}&max_price=${values_price[1]}&min_quantity=${values_quantities[0]}&max_quantity=${values_quantities[1]}`
+    console.log(query)
+    fetch(query)
+      .then(res => res.json())
+      .then(products => this.setState({products}));
   }
-  filterByStock = (n) => {
-    let filteredProducts = this.state.data.filter((d) =>{
-      return d.quantity >= n[0] && d.quantity <= d[1]
-    })
-    this.setState({
-      products: filteredProducts,
-    })
-  }
+
   orderBy = (by,desc) => {
     console.log(by,desc);
       let query = `/products/sublevel/${this.state.sublevel_id}/order?by=${by}&desc=${desc}`;
@@ -127,8 +109,27 @@ class App extends Component {
       fetch(query_ava)
         .then(res => res.json())
         .then(availableProducts => this.setState({availableProducts,number_available:availableProducts.length}));
-
-  }
+      let query_min_quantity =`/products/sublevel/${sublevel_id}/stats/min?attribute=quantity`;
+      let query_min_price =`/products/sublevel/${sublevel_id}/stats/min?attribute=price`;
+      let query_max_quantity =`/products/sublevel/${sublevel_id}/stats/max?attribute=quantity`;
+      let query_max_price =`/products/sublevel/${sublevel_id}/stats/max?attribute=price`;
+      fetch(query_min_quantity)
+        .then(res => res.json())
+        .then(p => this.setState({minQuantity:p.quantity}));
+      fetch(query_min_price)
+        .then(res => res.json())
+        .then(p => this.setState({minPrice:p.price}));
+      fetch(query_max_quantity)
+        .then(res => res.json())
+        .then(p => this.setState({maxQuantity:p.quantity}));
+      fetch(query_max_price)
+        .then(res => res.json())
+        .then(p => {
+          this.setState({maxPrice:p.price})
+          console.log(p.price)
+        });
+      
+  } 
   
   render() {
     return (
@@ -161,8 +162,7 @@ class App extends Component {
                 number_available={this.state.number_available}
                 filterByName={this.filterByName} 
                 filterAvailable={this.filterAvailable}
-                filterByPrice={this.filterByPrice}
-                filterByStock={this.filterByStock}
+                filterBy={this.filterBy}
                 orderBy={this.orderBy}
                 products={this.state.products}>
               </MainContent>

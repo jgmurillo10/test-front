@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Icon, Modal, Button, Divider, Table, notification } from "antd";
+import { Icon, Modal, Button, Table, notification } from "antd";
 const columns = [{
   title: 'Name',
   dataIndex: 'name',
   key: 'name',
-  render: text => <a href="#">{text}</a>,
+  render: text => <p>{text}</p>,
 }, {
   title: 'Price',
   dataIndex: 'price',

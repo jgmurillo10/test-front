@@ -67,7 +67,7 @@ router.get('/sublevel/:id_sublevel', function(req, res, next) {
     if(p.sublevel_id == req.params.id_sublevel) {
       if(req.query.min_price && req.query.max_price ){
         console.log('yes')
-        let price = Number(p.price.replace("$","").replace(",",""));
+        let price = p.price;
         if(price>=req.query.min_price && price<=req.query.max_price){
           
           if(req.query.min_quantity && req.query.max_quantity){
