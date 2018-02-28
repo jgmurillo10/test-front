@@ -86,3 +86,23 @@
   margin-top: 8vh;
   z-index: 9;
 }
+.dimension {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+}
+.dimension-button-group {
+  /*padding-right: 0;*/
+}
+.dimension-button {
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+  margin-left: 1em;
+  font-size: 1em;
+  padding-right: 0.2em;
+  padding-left: 0.2em;
+}
+.dimension-label {
+  margin-right: 1em;
+}

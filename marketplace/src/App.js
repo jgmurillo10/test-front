@@ -15,7 +15,6 @@ class App extends Component {
     number_available: 0,
     cart_products: [],
     grandTotal:0,
-    users:[],
 
   }
   componentDidMount(){
@@ -107,52 +106,20 @@ class App extends Component {
       products: filteredProducts,
     })
   }
-  orderByPrice = (order) => {
-    let sorted = this.sortByKey(this.state.products,"price",true);
-    this.setState({
-      products: sorted,
-    })
-  }
-  sortByKey = (array, key,parseNumber) => {
-    console.log(array)
-    return array.sort(function(a, b) {
-      var x,y;
-      x = a[key];
-      y = b[key];
-      if(parseNumber){
-        x = Number(a[key].replace("$","").replace(",",""));
-        y = Number(b[key].replace("$","").replace(",",""));
-        console.log(x,y)
-      }
-      
-      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-      
-    });
-  }
-  orderByAvailibity = (order) => {
-    let sorted = this.sortByKey(this.state.products,"available");
-    this.setState({
-      products: sorted,
-    })
-  }
-  orderByStock = (order) => {
-    let sorted = this.sortByKey(this.state.products,"quantity");
-    this.setState({
-      products: sorted,
-    })
-  }
-  orderByName = (order) => {
-    let sorted = this.sortByKey(this.state.products,"name");
-    this.setState({
-      products: sorted,
-    })
-  }
-  
-
-  setData = (sublevel_id) =>{
-      fetch(`/products/sublevel/${sublevel_id}`)
+  orderBy = (by,desc) => {
+    console.log(by,desc);
+      let query = `/products/sublevel/${this.state.sublevel_id}/order?by=${by}&desc=${desc}`;
+      console.log(query)
+      fetch(query)
         .then(res => res.json())
         .then(products => this.setState({ products }));
+  }
+  setData = (sublevel_id) =>{
+      
+      let query = `/products/sublevel/${sublevel_id}`;
+      fetch(query)
+        .then(res => res.json())
+        .then(products => this.setState({ products,sublevel_id:sublevel_id }));
   }
   
   render() {
@@ -188,10 +155,7 @@ class App extends Component {
                 filterAvailable={this.filterAvailable}
                 filterByPrice={this.filterByPrice}
                 filterByStock={this.filterByStock}
-                orderByPrice={this.orderByPrice}
-                orderByName={this.orderByName}
-                orderByQuantity={this.orderByQuantity}
-                orderByA={this.orderByAvailibity}
+                orderBy={this.orderBy}
                 products={this.state.products}>
               </MainContent>
               :

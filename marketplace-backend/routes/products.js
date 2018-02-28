@@ -4,9 +4,6 @@ var products = require('../public/data/products.json');
 products.forEach(p=>{
   p.price = Number(p.price.replace("$","").replace(",",""));
 })
-const https = require("https");
-const url =
-  "https://localhost:3001";
 function sortByKey(array, key,parseNumber){
 
   console.log(parseNumber)
@@ -14,12 +11,16 @@ function sortByKey(array, key,parseNumber){
     var x,y;
     x = a[key];
     y = b[key];
+
     if(parseNumber){
       x = Number(a[key].replace("$","").replace(",",""));
       y = Number(b[key].replace("$","").replace(",",""));
       console.log(x,y)
     }
-    
+    if(typeof x === 'string'){
+      x = x.toLowerCase();
+      y = y.toLowerCase();
+    }
     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     
   });
@@ -132,7 +133,7 @@ router.get('/sublevel/:id/order', function(req,res,next) {
   })
   console.log(res_array)
   let sorted = sortByKey(res_array,req.query.by,req.query.parseNumber);
-  if(req.query.desc){
+  if(req.query.desc == "true"){
     res.json(sorted.reverse());
   }
   else{

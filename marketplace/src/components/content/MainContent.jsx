@@ -100,10 +100,8 @@ export default class MainContent extends Component {
 						filterByPrice={this.props.filterByPrice}
 						filterAvailable={this.props.filterAvailable}
 						filterByStock={this.props.filterByStock}
-						orderByPrice={this.props.orderByPrice}
-						orderByA={this.props.orderByA}
-						orderByQuantity={this.props.orderByQuantity}
-						orderByName={this.props.orderByName}
+
+						orderBy={this.props.orderBy}
 						names={this.names}
 						number_available={this.props.number_available}
 						products={this.props.products}

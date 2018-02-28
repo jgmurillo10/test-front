@@ -13,7 +13,6 @@ export default class Filter extends Component {
 	 
 	  this.props.filterByStock(value);
 	}
-	
 	onAfterChangeSlider = (value) => {
 	  console.log('onAfterChange: ', value);
 	}
@@ -24,7 +23,6 @@ export default class Filter extends Component {
 	  console.log(`checked = ${e.target.checked}`);
 	  this.props.filterAvailable(e.target.checked);
 	}
-	
 	render(){
 		return(
 			<div>
@@ -43,10 +41,43 @@ export default class Filter extends Component {
 						<div className="main-filter">
 							<div className="main-filter-order">
 								<Card title="Ordenar resultados"  style={{  }}>
-								    <Button className="order-buttons" onClick={this.props.orderByPrice}>Precio <Icon type="up" /> <Icon type="down" /></Button>
-									<Button className="order-buttons" onClick={this.props.orderByA}>Disponibilidad <Icon type="up" /> <Icon type="down" /></Button>
-									<Button className="order-buttons" onClick={this.props.orderByQuantity}>Cantidad <Icon type="up" /> <Icon type="down" /></Button>
-									<Button className="order-buttons" onClick={this.props.orderByName}>Nombre <Icon type="up" /> <Icon type="down" /></Button>
+									<div className="dimension">
+										<div className="dimension-label">
+											<p>Precio</p>
+										</div>
+										<div>
+										    <Icon onClick={()=>this.props.orderBy("price",false)} className="dimension-button" type="down" />
+										    <Icon onClick={()=>this.props.orderBy("price",true)} className="dimension-button" type="up" />
+									    </div>
+									</div>
+
+									<div className="dimension">
+										<div className="dimension-label">
+											<p>Disponibilidad</p>
+										</div>
+										<div>
+										    <Icon onClick={()=>this.props.orderBy("available",false)} className="dimension-button" type="down" />
+										    <Icon onClick={()=>this.props.orderBy("available",true)} className="dimension-button" type="up" />
+									    </div>
+									</div>
+									<div className="dimension">
+										<div className="dimension-label">
+											<p>Cantidad</p>
+										</div>
+										<div>
+										    <Icon onClick={()=>this.props.orderBy("quantity",false)} className="dimension-button" type="down" />
+										    <Icon onClick={()=>this.props.orderBy("quantity",true)} className="dimension-button" type="up" />
+									    </div>
+									</div>
+									<div className="dimension">
+										<div className="dimension-label">
+											<p>Nombre</p>
+										</div>
+										<div>
+										    <Icon onClick={()=>this.props.orderBy("name",false)} className="dimension-button" type="down" />
+										    <Icon onClick={()=>this.props.orderBy("name",true)} className="dimension-button" type="up" />
+									    </div>
+									</div>
 									
 								 </Card>
 							</div>
