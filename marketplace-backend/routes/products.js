@@ -58,6 +58,16 @@ router.get('/sublevel/:id_sublevel/available',function(req,res,next) {
 
   res.json(response);
 });
+router.get('/sublevel/:id_sublevel/search', function(req,res,next) {
+  let resP = [];
+  products.forEach(p => {
+    if(p.sublevel_id == req.params.id_sublevel){
+      if(p.name.toLowerCase().includes(req.query.name.toLowerCase()))
+        resP.push(p);
+    }
+  })
+  res.json(resP)
+});
 router.get('/sublevel/:id_sublevel', function(req, res, next) {
   // Comment out this line:
   //res.send('respond with a resource');
