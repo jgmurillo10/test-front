@@ -14,10 +14,19 @@
   display: flex;
   justify-content: flex-start;
   align-items: baseline;
-
-  /*position: fixed;
-  left: 7%;
-  top: 4vh;*/
+}
+.cart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.cart-item {
+  margin:1em;
+}
+.pointer {
+  cursor: pointer;
+  margin-left: 2em;
 }
 .header-icon {
   font-size: 2em;

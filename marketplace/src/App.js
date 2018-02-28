@@ -41,19 +41,7 @@ class App extends Component {
       .then(maxQuantity => this.setState({ maxQuantity }));
     
   }
-  addCartProduct = (product,quantity) => {
-    let totalCost = quantity * product.price;
-    console.log("addCartProduct")
-    product.order = quantity; 
-    product.totalCost = totalCost
-    let actual_cost = this.state.grandTotal;
-    this.setState({
-      grandTotal: actual_cost+=totalCost,
-    })
-    product.totalCostFormat = "$"+totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-    console.log(product);
-    this.state.cart_products.push(product)
-  }
+
   removeCartProducts = () => {
     console.log("remove cart_products")
     this.setState({
@@ -129,7 +117,90 @@ class App extends Component {
         });
       
   } 
-  
+  deleteItem = (id) => {
+    let del_pos = -1;
+    this.state.cart_products.forEach((c,i)=>{
+      if(c.id == id){
+        del_pos = i;
+      }
+    })
+    let new_arr = this.state.cart_products;
+    new_arr.splice(del_pos,1);
+    this.setState({
+      cart_products: new_arr,
+    }, ()=>{
+      this.recalculateTotalCost();
+    })
+
+  }
+  getCartProduct = (id) => {
+    let product;
+    let index;
+    this.state.cart_products.forEach((a,i)=>{
+      if (a.id == id) {product=a;}
+    })
+    product.index = index;
+    return product;
+  }
+  addCartProduct = (product,quantity) => {
+    console.log(product,quantity)
+    let totalCost = quantity * product.price;
+    console.log("addCartProduct")
+    //check if the item is already in the array
+    let found=false;
+    let new_arr = this.state.cart_products;
+    this.state.cart_products.forEach(p=>{
+      if(product.id == p.id){
+        product.order += quantity;
+        product.totalCost = product.order*product.price;
+        product.totalCostFormat= "$"+product.totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+        new_arr[product.index] = product;
+        console.log(new_arr,'new array existing product');
+        this.setState({
+          cart_products:new_arr,
+        }, ()=>{this.recalculateTotalCost()})
+        found=true;
+      }
+    })
+    if(found) return false;
+    console.log('notfound')
+    product.order = quantity; 
+    product.totalCost = totalCost;
+    product.totalCostFormat = "$"+totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+
+    new_arr.push(product)
+    this.setState({
+      cart_products:new_arr
+    },()=>{
+      console.log('before calc')
+      this.recalculateTotalCost();
+    })
+    return true;
+  }
+  changeOrder = (id, valueOrder) => {
+    let p = this.getCartProduct(id);
+    p.order = valueOrder;
+    p.totalCost = p.order * p.price;
+    p.totalCostFormat = "$"+p.totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    let new_arr = this.state.cart_products;
+    new_arr[p.index] = p;
+
+    this.setState({
+      cart_products: new_arr,
+    },()=>{
+      this.recalculateTotalCost();
+    })
+    
+  };
+  recalculateTotalCost = (arr) => {
+    let grand = 0;
+    this.state.cart_products.forEach(c=>{
+      grand+= c.price*c.order;
+    })
+    this.setState({
+      grandTotal: grand,
+    });
+  }
   render() {
     return (
       <div>
@@ -138,6 +209,8 @@ class App extends Component {
           <Header className="header-container"> 
             {this.state.categories!==0?
             <HeaderMenu 
+              changeOrder={this.changeOrder}
+              deleteItem={this.deleteItem}
               setData={this.setData}
               grandTotal={this.state.grandTotal}
               removeCartProducts={this.removeCartProducts}

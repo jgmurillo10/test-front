@@ -55,7 +55,7 @@ export default class MainContent extends Component {
 	      visible: false,
 	      confirmLoading: false,
 	    });
-	  }, 1000);
+	  }, 10);
 
 	  this.openNotificationWithIcon('success',"El producto fue agregado correctamente a tu carrito.")
 	}
@@ -102,7 +102,7 @@ export default class MainContent extends Component {
 		return (
 				<div className="main-content">
 					<div className="main-search">
-						<Search suffix={suffix} value={this.state.value} onChange={this.onChangeQuery} placeholder="Buscar productos..." enterButton="Search" onSearch={value => this.props.filterByName(value)} size="large" />
+						<Search suffix={suffix} value={this.state.value} onChange={this.onChangeQuery} placeholder="Buscar productos..." enterButton="Buscar" onSearch={value => this.props.filterByName(value)} size="large" />
 					</div>
 					<Filter
 						filterBy={this.props.filterBy}
@@ -132,7 +132,7 @@ export default class MainContent extends Component {
 								  >
 								    <Meta
 								      title={d.name}
-								      description={d.price}
+								      description={"$"+d.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
 								    />
 								    {"quantity "+d.quantity}
 								    {"available "+d.available}
