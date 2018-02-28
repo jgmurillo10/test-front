@@ -79,13 +79,15 @@ class App extends Component {
     }
   filterAvailable = (check) => {
     if(check){
-    this.setState({
-      products:this.state.availableProducts
-    })
+      let query = `/products/sublevel/${this.state.sublevel_id}/available`;
+      fetch(query)
+        .then(res => res.json())
+        .then(products => this.setState({ products }));
     }else {
-      this.setState({
-        products:this.state.data
-      })
+      let query = `/products/sublevel/${this.state.sublevel_id}`;
+      fetch(query)
+        .then(res => res.json())
+        .then(products => this.setState({ products }));
     }
 
   }
@@ -115,11 +117,17 @@ class App extends Component {
         .then(products => this.setState({ products }));
   }
   setData = (sublevel_id) =>{
-      
+      //get all the products from the same sublevel_id
       let query = `/products/sublevel/${sublevel_id}`;
       fetch(query)
         .then(res => res.json())
         .then(products => this.setState({ products,sublevel_id:sublevel_id }));
+      //get all the available products
+      let query_ava = `/products/sublevel/${sublevel_id}/available`
+      fetch(query_ava)
+        .then(res => res.json())
+        .then(availableProducts => this.setState({availableProducts,number_available:availableProducts.length}));
+
   }
   
   render() {

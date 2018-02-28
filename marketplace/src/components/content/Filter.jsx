@@ -26,7 +26,6 @@ export default class Filter extends Component {
 	  console.log('onAfterChange: ', value);
 	}
 	onChangeCheckBox = (e) => {
-	  console.log(`checked = ${e.target.checked}`);
 	  this.props.filterAvailable(e.target.checked);
 	}
 
