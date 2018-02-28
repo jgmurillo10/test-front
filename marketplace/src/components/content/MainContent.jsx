@@ -5,7 +5,6 @@ import Filter from "./Filter.jsx";
 const { Meta } = Card;
 const Search = Input.Search;
 let names = []
-
 export default class MainContent extends Component {
 	constructor(props){
 		super(props)
@@ -25,11 +24,9 @@ export default class MainContent extends Component {
 		names=[]
 	}
 	onSelect = (value) => {
-	  console.log('onSelect', value);
 	  this.props.filterByName(value);
 	}
 	handleSearch = (value) => {
-	    console.log(value)
 	    this.setState({value});
 	    this.props.filterByName(value);
 	}
@@ -60,7 +57,6 @@ export default class MainContent extends Component {
 	  this.openNotificationWithIcon('success',"El producto fue agregado correctamente a tu carrito.")
 	}
 	handleCancel = () => {
-	  console.log('Clicked cancel button');
 	  this.setState({
 	    visible: false,
 	  });
@@ -72,9 +68,7 @@ export default class MainContent extends Component {
 	  });
 	};
 	handleAddProductCart = (e) => {
-		console.log(e)
 		if(e.available){
-			
 			this.setState({
 				ModalText: `Vas a agregar ${e.name} a tu carrito. Hay ${e.quantity} unidades disponibles. Por favor ingresa el número de unidades que deseas agregar`,
 				maxUnits: e.quantity,
@@ -91,10 +85,6 @@ export default class MainContent extends Component {
 	  }
 	render(){
 		const suffix = this.state.value!==''? <Icon className="icon-suffix" type="close-circle" onClick={()=>this.handleSearch('')} /> :'';
-		// const marks = {
-		//   this.props.min: `${this.props.min}`,
-		//   this.props.max: `${this.props.max}`
-		// };
 		const { visible, confirmLoading, ModalText, maxUnits } = this.state;
 		this.props.products.forEach(p=>{
 			names.push(p.name);

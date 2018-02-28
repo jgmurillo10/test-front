@@ -43,7 +43,6 @@ class App extends Component {
   }
 
   removeCartProducts = () => {
-    console.log("remove cart_products")
     this.setState({
       cart_products: [],
     })
@@ -69,23 +68,19 @@ class App extends Component {
 
   }
   filterBy = (values_price, values_quantities) => {
-    let query = `/products/sublevel/${this.state.sublevel_id}?min_price=${values_price[0]}&max_price=${values_price[1]}&min_quantity=${values_quantities[0]}&max_quantity=${values_quantities[1]}`
-    console.log(query)
+    let query = `/products/sublevel/${this.state.sublevel_id}?min_price=${values_price[0]}&max_price=${values_price[1]}&min_quantity=${values_quantities[0]}&max_quantity=${values_quantities[1]}`;
     fetch(query)
       .then(res => res.json())
       .then(products => this.setState({products}));
   }
 
   orderBy = (by,desc) => {
-    console.log(by,desc);
       let query = `/products/sublevel/${this.state.sublevel_id}/order?by=${by}&desc=${desc}`;
-      console.log(query)
       fetch(query)
         .then(res => res.json())
         .then(products => this.setState({ products }));
   }
   setData = (sublevel_id) =>{
-    console.log('setData')
       //get all the products from the same sublevel_id
       let query = `/products/sublevel/${sublevel_id}`;
       fetch(query)
@@ -112,15 +107,14 @@ class App extends Component {
       fetch(query_max_price)
         .then(res => res.json())
         .then(p => {
-          this.setState({maxPrice:p.price})
-          console.log(p.price)
+          this.setState({maxPrice:p.price});
         });
       
   } 
   deleteItem = (id) => {
     let del_pos = -1;
     this.state.cart_products.forEach((c,i)=>{
-      if(c.id == id){
+      if(c.id === id){
         del_pos = i;
       }
     })
@@ -137,25 +131,22 @@ class App extends Component {
     let product;
     let index;
     this.state.cart_products.forEach((a,i)=>{
-      if (a.id == id) {product=a;}
+      if (a.id === id) {product=a;}
     })
     product.index = index;
     return product;
   }
   addCartProduct = (product,quantity) => {
-    console.log(product,quantity)
     let totalCost = quantity * product.price;
-    console.log("addCartProduct")
     //check if the item is already in the array
     let found=false;
     let new_arr = this.state.cart_products;
     this.state.cart_products.forEach(p=>{
-      if(product.id == p.id){
+      if(product.id === p.id){
         product.order += quantity;
         product.totalCost = product.order*product.price;
         product.totalCostFormat= "$"+product.totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         new_arr[product.index] = product;
-        console.log(new_arr,'new array existing product');
         this.setState({
           cart_products:new_arr,
         }, ()=>{this.recalculateTotalCost()})
@@ -163,7 +154,6 @@ class App extends Component {
       }
     })
     if(found) return false;
-    console.log('notfound')
     product.order = quantity; 
     product.totalCost = totalCost;
     product.totalCostFormat = "$"+totalCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
@@ -172,7 +162,6 @@ class App extends Component {
     this.setState({
       cart_products:new_arr
     },()=>{
-      console.log('before calc')
       this.recalculateTotalCost();
     })
     return true;

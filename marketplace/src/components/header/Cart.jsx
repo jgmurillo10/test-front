@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, Modal, Button, Table, notification, Card, InputNumber } from "antd";
+import { Icon, Modal, Button, notification, Card, InputNumber } from "antd";
 export default class Cart extends Component {
 	state = {
 	    loading: false,
@@ -59,10 +59,10 @@ export default class Cart extends Component {
 				        		<div className="cart-container">
 				        			{this.props.cart_products.map(p=>{
 				        				return (<Card className="cart-item" key={p.id} title={p.name} extra={<Icon className="pointer" onClick={()=>this.props.deleteItem(p.id)} type="close" />} style={{ width: 300 }}>
-				        													    <p>{"$"+p.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')} per unit</p>
-				        													    <InputNumber size="small" min={1} max={p.quantity}  defaultValue={p.order} onChange={(value)=>this.onChange(p.id, value)} /> <span> units</span>
-				        													    <p>{p.totalCostFormat}</p>
-				        													  </Card>)
+												    <p>{"$"+p.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')} per unit</p>
+												    <InputNumber size="small" min={1} max={p.quantity}  defaultValue={p.order} onChange={(value)=>this.onChange(p.id, value)} /> <span> units</span>
+												    <p>{p.totalCostFormat}</p>
+												</Card>)
 				        			})}
 				        		</div>
 				        		<div>

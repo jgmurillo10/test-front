@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AutoComplete, Input, Icon, Card, Slider, Checkbox } from 'antd';
+import { Icon, Card, Slider, Checkbox } from 'antd';
 export default class Filter extends Component {
 	state = {
 		selected: 'caret-',
@@ -17,7 +17,6 @@ export default class Filter extends Component {
 	  	return value;
 	}
 	onAfterChangeSlider = (range_price) => {
-		console.log(range_price)
 	  this.setState({range_price});
 	  if(this.state.range_quantity.length===0){
 	  	this.props.filterBy(range_price,[0,this.props.maxQuantity])
@@ -27,7 +26,6 @@ export default class Filter extends Component {
 
 	}
 	onAfterChangeSliderStock = (range_quantity) => {
-		console.log(range_quantity)
 		this.setState({range_quantity});
 		if(this.state.range_price.length===0){
 		  	this.props.filterBy([0,this.props.maxPrice],range_quantity)
@@ -39,7 +37,6 @@ export default class Filter extends Component {
 	  this.props.filterAvailable(e.target.checked);
 	}
 	render(){
-		const { dataSource } = this.props
 		return(
 			<div>
 				<div className="main-filter">
@@ -86,16 +83,14 @@ export default class Filter extends Component {
 						 </Card>
 					</div>
 					<div className="main-filter-filter">
-
 						<Card title="Filtrar resultados"  style={{  }}>
 						   	<p>Disponibilidad</p>
 							<Checkbox onChange={this.onChangeCheckBox}>Mostrar disponibles ({this.props.number_available} de {this.props.products.length})</Checkbox>
 							<p>Precio</p>
-							<Slider tipFormatter={this.formatter} range   min={0} max={this.props.maxPrice} step={1} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
+							<Slider tipFormatter={this.formatter} range   min={0} max={+this.props.maxPrice} step={+0.01} onChange={this.onChangeSlider} onAfterChange={this.onAfterChangeSlider} />
 							<p>Cantidad en stock</p>
-							<Slider range  min={0} max={this.props.maxQuantity} step={1} onChange={this.onChangeSliderStock} onAfterChange={this.onAfterChangeSliderStock} />
-
-						 </Card>
+							<Slider range  min={0} max={+this.props.maxQuantity} step={+0.01} onChange={this.onChangeSliderStock} onAfterChange={this.onAfterChangeSliderStock} />
+						</Card>
 						
 					</div>
 				</div>

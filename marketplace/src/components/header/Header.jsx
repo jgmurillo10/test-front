@@ -3,19 +3,13 @@ import { Menu, Icon, Cascader } from "antd";
 import PropTypes from "prop-types";
 import Cart from "./Cart.jsx";
 export default class HeaderMenu extends Component {
-  componentDidMount(){
-
-  }
   handleClick = (e) => {
-    console.log("click ", e);
     this.setState({
       current: e.key,
     });
   }
   onChange = (value) => {
-    console.log(value);
     this.props.setData(value[value.length-1]);
-    // this.props.filterData(value);
   }
 
   render() {
@@ -32,11 +26,11 @@ export default class HeaderMenu extends Component {
           >
             {this.props.categories.length!==0?
               this.props.categories.map((d,i)=>{
-                  return (<Menu.Item key={i}>
-
-                    <Cascader key={d.id} options={d.children} onChange={this.onChange} placeholder={d.label} />
-
-                    </Menu.Item>)  
+                  return (
+                          <Menu.Item key={i}>
+                            <Cascader key={d.id} options={d.children} onChange={this.onChange} placeholder={d.label} />
+                          </Menu.Item>
+                          )  
                 
                 
               })
