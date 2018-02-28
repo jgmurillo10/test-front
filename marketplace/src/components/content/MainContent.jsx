@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Icon, Card, Modal, InputNumber, notification } from 'antd';
+import { Icon, Card, Modal, InputNumber, notification, Input } from 'antd';
 import Filter from "./Filter.jsx";
 const { Meta } = Card;
+const Search = Input.Search;
 let names = []
 
 export default class MainContent extends Component {
@@ -17,6 +18,7 @@ export default class MainContent extends Component {
 		    maxUnits:1,
 		    product:{},
 		    units:1,
+		    value:''
 		}
 	}
 	componentDidUpdate(){
@@ -28,6 +30,7 @@ export default class MainContent extends Component {
 	}
 	handleSearch = (value) => {
 	    console.log(value)
+	    this.setState({value});
 	    this.props.filterByName(value);
 	}
 	onChange = (value) => {
@@ -83,8 +86,11 @@ export default class MainContent extends Component {
 		}
 
 	}
+	onChangeQuery = (e) => {
+	    this.setState({ value: e.target.value });
+	  }
 	render(){
-
+		const suffix = this.state.value!==''? <Icon className="icon-suffix" type="close-circle" onClick={()=>this.handleSearch('')} /> :'';
 		// const marks = {
 		//   this.props.min: `${this.props.min}`,
 		//   this.props.max: `${this.props.max}`
@@ -95,7 +101,9 @@ export default class MainContent extends Component {
 		})
 		return (
 				<div className="main-content">
-
+					<div className="main-search">
+						<Search suffix={suffix} value={this.state.value} onChange={this.onChangeQuery} placeholder="Buscar productos..." enterButton="Search" onSearch={value => this.props.filterByName(value)} size="large" />
+					</div>
 					<Filter
 						filterBy={this.props.filterBy}
 						filterAvailable={this.props.filterAvailable}

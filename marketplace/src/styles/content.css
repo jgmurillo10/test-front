@@ -1,7 +1,7 @@
 .main-content {
   display: grid;
   grid-template-columns: repeat(6,1fr);
-  grid-template-rows: 10vh auto;
+  grid-template-rows: auto auto;
   grid-template-areas: 
     "filter-area search-area search-area search-area search-area search-area"
     "filter-area results-area results-area results-area results-area results-area";
@@ -12,11 +12,15 @@
 }
 .main-search {
   grid-area: search-area;
-  width: 100%;
+  width: 80%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
   z-index: 99;
-  margin-top: 1em;
+  margin:3em;
+}
+.icon-suffix {
+  margin-right: 1em;
 }
 .main-filter {
   grid-area: filter-area;

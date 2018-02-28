@@ -61,12 +61,10 @@ class App extends Component {
     })
   }
   filterByName = (name) => {
-      let filteredProducts = this.state.products.filter((d) => {
-        return d.name.toLowerCase().includes(name.toLowerCase());
-      })
-      this.setState({
-        products:filteredProducts
-      })
+      let query = `/products/sublevel/${this.state.sublevel_id}/search?name=${name}`;
+      fetch(query)
+        .then(res => res.json())
+        .then(products => this.setState({products}));
     }
   filterAvailable = (check) => {
     if(check){
@@ -99,6 +97,7 @@ class App extends Component {
         .then(products => this.setState({ products }));
   }
   setData = (sublevel_id) =>{
+    console.log('setData')
       //get all the products from the same sublevel_id
       let query = `/products/sublevel/${sublevel_id}`;
       fetch(query)
