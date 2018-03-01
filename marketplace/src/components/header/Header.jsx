@@ -4,13 +4,11 @@ import PropTypes from "prop-types";
 import Cart from "./Cart.jsx";
 export default class HeaderMenu extends Component {
   handleClick = (e,f) => {
-    console.log(e,f,'onClickMenu')
     this.setState({
       current: e.key,
     });
   }
   onChange = (value,self) => {
-    console.log(value);
     if(value.length!==0){
       this.props.setData(value[value.length-1]);  
       this.props.selectMenu(value);
