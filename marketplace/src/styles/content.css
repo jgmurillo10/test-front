@@ -10,6 +10,7 @@
   margin-top: 8vh;
   z-index: 9;
 }
+
 .main-search {
   grid-area: search-area;
   width: 80%;
@@ -27,7 +28,7 @@
   background-color: #fff;
   margin: 1em;
   padding: 1em;
-  height: auto;
+  /*height: auto;*/
   width: 18%;
   position: fixed;
 
@@ -109,4 +110,81 @@
 }
 .dimension-label {
   margin-right: 1em;
+}
+
+@media (max-width: 550px){
+    .main-filter-container {
+      display: grid !important;
+      grid-template-columns: repeat(1,1fr) !important;
+      grid-template-rows: auto auto !important;
+      align-content: center !important;
+      grid-template-areas: 
+          "order" 
+          "filter" !important;
+      align-items: baseline !important;
+      justify-self: center !important;
+    }
+}
+@media (max-width: 1210px) {
+  .main-content {
+    position: static;
+    margin:0;
+    padding:0;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: auto 8vh auto;
+    grid-template-areas: 
+      "filter-area filter-area filter-area filter-area filter-area filter-area"
+      "search-area search-area search-area search-area search-area search-area"
+      "results-area results-area results-area results-area results-area results-area";
+    min-height: 100vh;
+    background-color: #D7F2BA;
+    z-index: 9;
+  }
+  .main-filter {
+    position: static !important;
+    justify-self: center;
+    width: 80% !important;
+    grid-area: filter-area;
+
+  }
+  .main-filter-container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: auto;
+    align-content: center;
+    grid-template-areas: 
+        "order filter";
+    align-items: baseline;
+    justify-self: center;
+  }
+  .main-filter-order {
+    grid-area: order;
+    width: 100%;
+  }
+  .main-filter-filter {
+    grid-area: filter;
+    width: 100%;
+  }
+  .card-container {
+    margin:0;
+    padding:0;
+  }
+  .card {
+    z-index: 1;
+    margin: 0.1em;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); 
+  }
+  
+  
+  .main-search {
+    grid-area: search-area;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    z-index: 99;
+    margin-bottom: 1em;
+  }
 }

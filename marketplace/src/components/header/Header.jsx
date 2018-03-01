@@ -3,43 +3,40 @@ import { Menu, Icon, Cascader } from "antd";
 import PropTypes from "prop-types";
 import Cart from "./Cart.jsx";
 export default class HeaderMenu extends Component {
-  handleClick = (e) => {
-    console.log(e)
+  handleClick = (e,f) => {
+    console.log(e,f,'onClickMenu')
     this.setState({
       current: e.key,
-      lastSelf:false,
     });
   }
   onChange = (value,self) => {
-    if(this.state.lastSelf){
-
-    }
-    console.log(value)
-    console.log(self)
-    // self[0].label = "";
+    console.log(value);
     if(value.length!==0){
       this.props.setData(value[value.length-1]);  
-      this.setState({lastSelf:self});
+      this.props.selectMenu(value);
     }
   }
-
+  displayRender = (label) => {
+    return label[label.length - 1];
+  }
   render() {
     return (
       <div className="header effect-7">
         <div className="header-logo">
-          <Icon  className="header-icon" type="shop" />
+          <Icon type="shop" />
         </div>
         
         <div className="header-menu">
           <Menu
             onClick={this.handleClick}
             mode="horizontal"
+            onChange={this.onChangeMenu}
           >
             {this.props.categories.length!==0?
               this.props.categories.map((d,i)=>{
                   return (
                           <Menu.Item key={i}>
-                            <Cascader key={d.id} options={d.children} onChange={(e, self)=>this.onChange(e,self)} placeholder={d.label} />
+                            <Cascader key={d.id} defaultValue={[]}  options={d.children} displayRender={this.displayRender} showSearch expandTrigger="hover" onChange={(e, self)=>this.onChange(e,self)} placeholder={d.label} />
                           </Menu.Item>
                           )  
                 

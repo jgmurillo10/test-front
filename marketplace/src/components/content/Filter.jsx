@@ -41,10 +41,10 @@ export default class Filter extends Component {
 			this.setState({selected:-1})
 		}
 		return(
-			<div>
-				<div className="main-filter">
+			<div className="main-filter">
+				<div className="main-filter-container">
 					<div className="main-filter-order">
-						<Card title="Ordenar resultados"  style={{  }}>
+						<Card title="Ordenar resultados" >
 							<div className="dimension">
 								<div className="dimension-label">
 									<p>Precio</p>
@@ -86,7 +86,7 @@ export default class Filter extends Component {
 						 </Card>
 					</div>
 					<div className="main-filter-filter">
-						<Card title="Filtrar resultados"  style={{  }}>
+						<Card title="Filtrar resultados">
 						   	<p>Disponibilidad</p>
 							<Checkbox onChange={this.onChangeCheckBox}>Mostrar disponibles ({this.props.number_available} de {this.props.products.length})</Checkbox>
 							<p>Precio</p>

@@ -86,6 +86,12 @@ class App extends Component {
   setData = (sublevel_id) =>{
       //get all the products from the same sublevel_id
       this.setKeyFilter(-1);
+      // this.setState({categories:[]},()=>{
+      //    fetch('/categories')
+      //   .then(res => res.json())
+      //   .then(categories => this.setState({ categories }));
+      // })
+     
       let query = `/products/sublevel/${sublevel_id}`;
       fetch(query)
         .then(res => res.json())
@@ -216,6 +222,9 @@ class App extends Component {
   setKeyFilter = (keyFilter) => {
     this.setState({keyFilter});
   }
+  selectMenu = (values) => {
+    this.setState({selectedMenu: values});
+  }
   render() {
     return (
       <div>
@@ -224,6 +233,7 @@ class App extends Component {
           <Header className="header-container"> 
             {this.state.categories!==0?
             <HeaderMenu 
+              selectMenu={this.selectMenu}
               changeOrder={this.changeOrder}
               deleteItem={this.deleteItem}
               setData={this.setData}
