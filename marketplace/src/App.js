@@ -18,6 +18,7 @@ class App extends Component {
   }
   componentDidMount(){
     // this.getProducts();
+    this.onGetData();
     fetch('/categories')
       .then(res => res.json())
       .then(categories => this.setState({ categories }));
@@ -45,7 +46,7 @@ class App extends Component {
   removeCartProducts = () => {
     this.setState({
       cart_products: [],
-    })
+    }, ()=>{this.onSetData()})
   }
   filterByName = (name) => {
       let query = `/products/sublevel/${this.state.sublevel_id}/search?name=${name}`;
@@ -124,6 +125,7 @@ class App extends Component {
       cart_products: new_arr,
     }, ()=>{
       this.recalculateTotalCost();
+      this.onSetData();
     })
 
   }
@@ -137,6 +139,7 @@ class App extends Component {
     return product;
   }
   addCartProduct = (product,quantity) => {
+
     let totalCost = quantity * product.price;
     //check if the item is already in the array
     let found=false;
@@ -149,7 +152,7 @@ class App extends Component {
         new_arr[product.index] = product;
         this.setState({
           cart_products:new_arr,
-        }, ()=>{this.recalculateTotalCost()})
+        }, ()=>{this.recalculateTotalCost(); this.onSetData()})
         found=true;
       }
     })
@@ -163,6 +166,7 @@ class App extends Component {
       cart_products:new_arr
     },()=>{
       this.recalculateTotalCost();
+      this.onSetData();
     })
     return true;
   }
@@ -189,6 +193,24 @@ class App extends Component {
     this.setState({
       grandTotal: grand,
     });
+  }
+  //function that sets local storage information
+  onSetData = () => {
+    console.log('onSetData')
+    localStorage.setItem("cart_products", JSON.stringify(this.state.cart_products));
+  }
+  onGetData = () => {
+    console.log('onGetData')
+    const cached = localStorage.getItem("cart_products");
+    if(cached){
+      console.log(cached);
+      this.setState({cart_products:JSON.parse(cached)}, ()=>{
+        this.recalculateTotalCost();
+      });
+    }
+    else {
+      return false;
+    }
   }
   render() {
     return (
