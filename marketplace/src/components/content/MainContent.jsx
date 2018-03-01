@@ -92,9 +92,17 @@ export default class MainContent extends Component {
 		return (
 				<div className="main-content">
 					<div className="main-search">
-						<Search suffix={suffix} value={this.state.value} onChange={this.onChangeQuery} placeholder="Buscar productos..." enterButton="Buscar" onSearch={value => this.props.filterByName(value)} size="large" />
+						{
+							// this.props.products.length!==0?
+								<Search suffix={suffix} value={this.state.value} onChange={this.onChangeQuery} placeholder="Buscar productos..." enterButton="Buscar" onSearch={value => this.props.filterByName(value)} size="large" />
+							// : 
+							// 	''
+						}
 					</div>
 					<Filter
+						keyFilter={this.props.keyFilter}
+						setKeyFilter={this.props.setKeyFilter}
+						reset={this.props.reset}
 						filterBy={this.props.filterBy}
 						filterAvailable={this.props.filterAvailable}
 						minPrice={this.props.minPrice}
@@ -107,32 +115,33 @@ export default class MainContent extends Component {
 						products={this.props.products}
 					>
 					</Filter>
+					{
+						<div className="card-container">
+							{this.props.products.map(d=>{
+								return (
 
-					<div className="card-container">
+										<Card
+											key={d.id}
+											className="card"
+										    style={{ width: 300 }}
+										    cover={<img className="card-image" alt="example" src="img/package.jpg" />}
+										    actions={[]}
+										  >
+										    <Meta
+										      title={d.name}
+										      description={"$"+d.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
+										    />
+										    {"quantity "+d.quantity}
+										    {"available "+d.available}
+
+										    <Icon className="card-add" product={d.id} onClick={()=>this.handleAddProductCart(d)} type="shopping-cart" />
+										  </Card>
+
+									)
+							})}
+						</div>
+					}
 					
-					{this.props.products.map(d=>{
-						return (
-
-								<Card
-									key={d.id}
-									className="card"
-								    style={{ width: 300 }}
-								    cover={<img className="card-image" alt="example" src="img/package.jpg" />}
-								    actions={[]}
-								  >
-								    <Meta
-								      title={d.name}
-								      description={"$"+d.price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}
-								    />
-								    {"quantity "+d.quantity}
-								    {"available "+d.available}
-
-								    <Icon className="card-add" product={d.id} onClick={()=>this.handleAddProductCart(d)} type="shopping-cart" />
-								  </Card>
-
-							)
-					})}
-					</div>
 					<div>
 						<Modal title="Agregar al carrito"
 				          visible={visible}

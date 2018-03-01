@@ -4,12 +4,23 @@ import PropTypes from "prop-types";
 import Cart from "./Cart.jsx";
 export default class HeaderMenu extends Component {
   handleClick = (e) => {
+    console.log(e)
     this.setState({
       current: e.key,
+      lastSelf:false,
     });
   }
-  onChange = (value) => {
-    this.props.setData(value[value.length-1]);
+  onChange = (value,self) => {
+    if(this.state.lastSelf){
+
+    }
+    console.log(value)
+    console.log(self)
+    // self[0].label = "";
+    if(value.length!==0){
+      this.props.setData(value[value.length-1]);  
+      this.setState({lastSelf:self});
+    }
   }
 
   render() {
@@ -28,7 +39,7 @@ export default class HeaderMenu extends Component {
               this.props.categories.map((d,i)=>{
                   return (
                           <Menu.Item key={i}>
-                            <Cascader key={d.id} options={d.children} onChange={this.onChange} placeholder={d.label} />
+                            <Cascader key={d.id} options={d.children} onChange={(e, self)=>this.onChange(e,self)} placeholder={d.label} />
                           </Menu.Item>
                           )  
                 

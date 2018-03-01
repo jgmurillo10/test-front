@@ -14,6 +14,8 @@ class App extends Component {
     number_available: 0,
     cart_products: [],
     grandTotal:0,
+    reset:false,
+    keyFilter:-1,
 
   }
   componentDidMount(){
@@ -83,6 +85,7 @@ class App extends Component {
   }
   setData = (sublevel_id) =>{
       //get all the products from the same sublevel_id
+      this.setKeyFilter(-1);
       let query = `/products/sublevel/${sublevel_id}`;
       fetch(query)
         .then(res => res.json())
@@ -200,10 +203,8 @@ class App extends Component {
     localStorage.setItem("cart_products", JSON.stringify(this.state.cart_products));
   }
   onGetData = () => {
-    console.log('onGetData')
     const cached = localStorage.getItem("cart_products");
     if(cached){
-      console.log(cached);
       this.setState({cart_products:JSON.parse(cached)}, ()=>{
         this.recalculateTotalCost();
       });
@@ -211,6 +212,9 @@ class App extends Component {
     else {
       return false;
     }
+  }
+  setKeyFilter = (keyFilter) => {
+    this.setState({keyFilter});
   }
   render() {
     return (
@@ -235,29 +239,23 @@ class App extends Component {
           
           <Layout>
             <Content>
-              {this.state.products.length !== 0 ?
                 <MainContent
-                addCartProduct={this.addCartProduct}
-                minPrice={this.state.minPrice}
-                maxPrice={this.state.maxPrice}
-                minQuantity={this.state.minQuantity}
-                maxQuantity={this.state.maxQuantity}
-                number_available={this.state.number_available}
-                filterByName={this.filterByName} 
-                filterAvailable={this.filterAvailable}
-                filterBy={this.filterBy}
-                orderBy={this.orderBy}
+                  reset={this.state.reset}
+                  keyFilter={this.state.keyFilter}
+                  setKeyFilter={this.setKeyFilter}
+                  addCartProduct={this.addCartProduct}
+                  minPrice={this.state.minPrice}
+                  maxPrice={this.state.maxPrice}
+                  minQuantity={this.state.minQuantity}
+                  maxQuantity={this.state.maxQuantity}
+                  number_available={this.state.number_available}
+                  filterByName={this.filterByName} 
+                  filterAvailable={this.filterAvailable}
+                  filterBy={this.filterBy}
+                  orderBy={this.orderBy}
                 products={this.state.products}>
               </MainContent>
-              :
-              <div className="banner">
-                <h1>Bienvenido a tu tienda,</h1>
-                <h3>para ver nuestros productos selecciona una categoría en el menú superior.</h3>
-                 
-
-              </div>
-
-              }
+              
               
             </Content>
           </Layout>
