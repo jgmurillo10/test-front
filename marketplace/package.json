@@ -15,5 +15,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://marketplace-test-front.herokuapp.com"
+  "proxy": "http://marketplace-test-front.herokuapp.com",
+  "homepage" : "http://juanmurillo.me/test-front/marketplace"
 }
