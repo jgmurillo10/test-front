@@ -14,7 +14,7 @@ This is a MarketPlace application that allows the user to explore products by ca
 ## Installation
 ```sh
 git clone https://github.com/jgmurillo10/test-front.git
-cd ../marketplace && yarn install && yarn start
+cd test-front/marketplace && yarn install && yarn start
 ```
 
 Check [http://localhost:3000](http://localhost:3000)
