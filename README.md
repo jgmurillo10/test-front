@@ -1,8 +1,6 @@
 
 # MarketPlace
 
-## Deploy URL
-[Live Demo](https://john-guerra.github.io/NodeNavigator/data-explorer/build/index.html)
 
 ## GitHub URL
 
@@ -16,7 +14,6 @@ This is a MarketPlace application that allows the user to explore products by ca
 ## Installation
 ```sh
 git clone https://github.com/jgmurillo10/test-front.git
-cd test-front/marketplace-backend && yarn install && PORT=3001 node bin/www 
 cd ../marketplace && yarn install && yarn start
 ```
 
