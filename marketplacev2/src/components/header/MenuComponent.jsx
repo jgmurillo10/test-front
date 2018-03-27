@@ -7,6 +7,7 @@ import { setCategoryFilter, setTitle } from '../../actions';
 const SubMenu = Menu.SubMenu;
 const MenuComponent = ({ categories, dispatch }) => {
   let current;
+  console.log(categories);
   const getMenu = (arr) => (
     arr.map((d) => {
       if (d.sublevels) {
@@ -38,7 +39,7 @@ const MenuComponent = ({ categories, dispatch }) => {
 };
 
 const mapStateToProps = state => ({
-  categories: state.categories,
+  categories: state.categories.items,
 });
 
 MenuComponent.propTypes = {

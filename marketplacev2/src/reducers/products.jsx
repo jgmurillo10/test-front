@@ -1,14 +1,29 @@
-import data from './products.json';
-
-const products = (state = data, action) => {
+const products = (state = { isFetching: false, items: [] }, action) => {
   switch (action.type) {
-    case 'GET_ALL':
-      return data;
+    case 'REQUEST_PRODUCTS':
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case 'RECEIVE_PRODUCTS':
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.products,
+      });
+    case 'REQUEST_PRODUCTS_CATEGORY':
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case 'RECEIVE_PRODUCTS_CATEGORY':
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.products,
+        category: action.category,
+      });
     case 'SET_CATEGORY_FILTER':
-      return data.filter(p => p.sublevel_id === +action.id);
+      return state.items.filter(p => p.sublevel_id === +action.id);
     case 'SEARCH':
       console.log('search',state,action)
-      return data.filter(p => p.name.includes(action.query));
+      return state.items.filter(p => p.name.includes(action.query));
     default:
       return state;
   }

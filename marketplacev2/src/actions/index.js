@@ -1,13 +1,64 @@
 import fetch from 'cross-fetch';
 
-export const getProducts = category => {
-  
+export const requestProducts = () => ({
+  type: 'REQUEST_PRODUCTS',
+});
+
+export const receiveProducts = products => ({
+  type: 'RECEIVE_PRODUCTS',
+  products,
+});
+
+export const requestCategories = () => ({
+  type: 'REQUEST_CATEGORIES',
+});
+
+export const receiveCategories = categories => ({
+  type: 'RECEIVE_CATEGORIES',
+  categories,
+});
+
+export const requestProductsByCategory = category => ({
+  type: 'REQUEST_PRODUCTS_CATEGORY',
+  category,
+});
+
+export const receiveProductsByCategory = (category, products) => ({
+  type: 'RECEIVE_PRODUCTS_CATEGORY',
+  category,
+  products,
+});
+
+export const fetchCategories = () => {
+  return function(dispatch) {
+    dispatch(requestCategories());
+
+    return fetch(`/categories`)
+      .then(
+        response => response.json(),
+        error => console.log('An error ocurred', error),
+      )
+      .then(json => dispatch(receiveCategories(json)));
+  }
+}
+
+export const fetchProducts = () => {
+  return function(dispatch) {
+    dispatch(requestProducts());
+
+    return fetch(`/products`)
+      .then(
+        response => response.json(),
+        error => console.log('An error ocurred', error),
+      )
+      .then(json => dispatch(receiveProducts(json)));
+  };
 };
 
 export const search = query => ({
   type: 'SEARCH',
   query,
-})
+});
 
 export const addProduct = (id, quantity, product) => ({
   type: 'ADD_PRODUCT',

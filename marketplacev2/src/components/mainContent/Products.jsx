@@ -38,7 +38,7 @@ const Products = ({ products, addProduct }) => {
 };
 
 const mapStateToProps = state => ({
-  products: state.products,
+  products: state.products.items,
 });
 
 const mapDispatchToProps = dispatch => ({

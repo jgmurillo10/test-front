@@ -1,12 +1,25 @@
 import React from 'react';
+import thunkMiddleware from 'redux-thunk';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { createLogger } from 'redux-logger';
 import App from './components/App';
 import rootReducer from './reducers';
+import { fetchProducts, fetchCategories } from './actions';
 import registerServiceWorker from './registerServiceWorker';
 import './App.css';
 
-const store = createStore(rootReducer);
+const loggerMiddleware = createLogger();
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware,
+  )
+);
+store.dispatch(fetchProducts());
+store.dispatch(fetchCategories());
+
 render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

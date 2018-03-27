@@ -7,6 +7,7 @@ const FilterComponent = () => {
     backgroundColor: 'white',
     marginTop: '1em',
     padding: '1em',
+    borderRadius: '0.5em',
   };
   return (
     <div style={filterStyle}>
