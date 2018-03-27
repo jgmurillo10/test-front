@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Menu } from 'antd';
-import { setCategoryFilter, setTitle } from '../../actions';
+import { setCategoryFilter, setTitle, fetchProductsByCategory } from '../../actions';
 
 const SubMenu = Menu.SubMenu;
 const MenuComponent = ({ categories, dispatch }) => {
@@ -21,7 +21,8 @@ const MenuComponent = ({ categories, dispatch }) => {
     })
   );
   const onClick = (e) => {
-    dispatch(setCategoryFilter(e.key));
+    dispatch(fetchProductsByCategory(e.key));
+    // dispatch(setCategoryFilter(e.key));
     dispatch(setTitle(`Productos de la subcategoría ${e.item.props.children}`));
   };
 

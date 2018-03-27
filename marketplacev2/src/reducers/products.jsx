@@ -1,4 +1,4 @@
-const products = (state = { isFetching: false, items: [] }, action) => {
+const products = (state = { category: '', isFetching: false, items: [] }, action) => {
   switch (action.type) {
     case 'REQUEST_PRODUCTS':
       return Object.assign({}, state, {
@@ -22,7 +22,6 @@ const products = (state = { isFetching: false, items: [] }, action) => {
     case 'SET_CATEGORY_FILTER':
       return state.items.filter(p => p.sublevel_id === +action.id);
     case 'SEARCH':
-      console.log('search',state,action)
       return state.items.filter(p => p.name.includes(action.query));
     default:
       return state;

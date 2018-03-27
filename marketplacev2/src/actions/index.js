@@ -30,28 +30,41 @@ export const receiveProductsByCategory = (category, products) => ({
 });
 
 export const fetchCategories = () => {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(requestCategories());
 
-    return fetch(`/categories`)
+    return fetch('/categories')
       .then(
         response => response.json(),
         error => console.log('An error ocurred', error),
       )
       .then(json => dispatch(receiveCategories(json)));
-  }
-}
+  };
+};
 
 export const fetchProducts = () => {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(requestProducts());
 
-    return fetch(`/products`)
+    return fetch('/products')
       .then(
         response => response.json(),
         error => console.log('An error ocurred', error),
       )
       .then(json => dispatch(receiveProducts(json)));
+  };
+};
+
+export const fetchProductsByCategory = (category) => {
+  return function (dispatch) {
+    dispatch(requestProductsByCategory(category));
+
+    return fetch(`/products/sublevel/${category}`)
+      .then(
+        response => response.json(),
+        error => console.log('An error ocurred', error),
+      )
+      .then(json => dispatch(receiveProductsByCategory(category, json)));
   };
 };
 

@@ -2,9 +2,17 @@ import React from 'react';
 import { Card, Icon, Avatar, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions';
+import './spinner.css';
 
 const { Meta } = Card;
-const Products = ({ products, addProduct }) => {
+const Products = ({ products, loading, addProduct }) => {
+  if (loading) {
+    return (
+      <div className="spinner">
+        <Icon type="loading" />
+      </div>
+    );
+  };
   return (
     <div>
       <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>
@@ -39,6 +47,7 @@ const Products = ({ products, addProduct }) => {
 
 const mapStateToProps = state => ({
   products: state.products.items,
+  loading: state.products.isFetching,
 });
 
 const mapDispatchToProps = dispatch => ({
