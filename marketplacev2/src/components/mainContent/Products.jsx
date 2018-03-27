@@ -7,13 +7,13 @@ const { Meta } = Card;
 const Products = ({ products, addProduct }) => {
   return (
     <div>
-      <h2>{`Mostrando ${products.length} productos`}</h2>
+      <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>
       <Row>
         {
           products.map(p => (
             <Col key={p.id} span={4} md={6} sm={12} xs={24} >
               <Card
-                style={{ margin: '1em 0' }}
+                style={{ margin: '1em' }}
                 cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
                 actions={[
                   <Icon type="ellipsis" />,
