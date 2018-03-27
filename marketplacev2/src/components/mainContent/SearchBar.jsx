@@ -10,7 +10,7 @@ const SearchBar = ({ displayFilter, setFilter, search }) => {
     <Icon style={{ cursor: 'pointer' }} onClick={() => setFilter()} type="filter" />
   );
   return (
-    <div style={{ marginBottom: 16 }}>
+    <div style={{ marginBottom: '1em'}}>
       <Search
         addonAfter={filter()}
         placeholder="Buscar productos..."
