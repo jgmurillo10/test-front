@@ -1,13 +1,6 @@
 import fetch from 'cross-fetch';
 
-export const requestProducts = () => ({
-  type: 'REQUEST_PRODUCTS',
-});
 
-export const receiveProducts = products => ({
-  type: 'RECEIVE_PRODUCTS',
-  products,
-});
 
 export const requestCategories = () => ({
   type: 'REQUEST_CATEGORIES',
@@ -16,17 +9,6 @@ export const requestCategories = () => ({
 export const receiveCategories = categories => ({
   type: 'RECEIVE_CATEGORIES',
   categories,
-});
-
-export const requestProductsByCategory = category => ({
-  type: 'REQUEST_PRODUCTS_CATEGORY',
-  category,
-});
-
-export const receiveProductsByCategory = (category, products) => ({
-  type: 'RECEIVE_PRODUCTS_CATEGORY',
-  category,
-  products,
 });
 
 export const fetchCategories = () => {
@@ -42,6 +24,15 @@ export const fetchCategories = () => {
   };
 };
 
+export const requestProducts = () => ({
+  type: 'REQUEST_PRODUCTS',
+});
+
+export const receiveProducts = products => ({
+  type: 'RECEIVE_PRODUCTS',
+  products,
+});
+
 export const fetchProducts = () => {
   return function (dispatch) {
     dispatch(requestProducts());
@@ -54,6 +45,17 @@ export const fetchProducts = () => {
       .then(json => dispatch(receiveProducts(json)));
   };
 };
+
+export const requestProductsByCategory = category => ({
+  type: 'REQUEST_PRODUCTS_CATEGORY',
+  category,
+});
+
+export const receiveProductsByCategory = (category, products) => ({
+  type: 'RECEIVE_PRODUCTS_CATEGORY',
+  category,
+  products,
+});
 
 export const fetchProductsByCategory = (category) => {
   return function (dispatch) {
@@ -68,10 +70,29 @@ export const fetchProductsByCategory = (category) => {
   };
 };
 
-export const search = query => ({
-  type: 'SEARCH',
+export const requestSearchProducts = query => ({
+  type: 'REQUEST_SEARCH_PRODUCTS',
   query,
 });
+
+export const receiveSearchProducts = (query,products) => ({
+  type: 'RECEIVE_SEARCH_PRODUCTS',
+  query,
+  products,
+});
+
+export const fetchSearchProducts = (category, query) => {
+  return function (dispatch) {
+    dispatch(requestSearchProducts());
+    let q = `/products/sublevel/${category}/search?name=${query}`;
+    return fetch(q)
+      .then(
+        response => response.json(),
+        error => console.log('An error ocurred', error),
+      )
+      .then(json => dispatch(receiveSearchProducts(query,json)));
+  };
+};
 
 export const addProduct = (id, quantity, product) => ({
   type: 'ADD_PRODUCT',

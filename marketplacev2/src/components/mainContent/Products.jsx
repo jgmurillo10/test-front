@@ -12,7 +12,7 @@ const Products = ({ products, loading, addProduct }) => {
         <Icon type="loading" />
       </div>
     );
-  };
+  } ;
   return (
     <div>
       <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>
@@ -47,7 +47,7 @@ const Products = ({ products, loading, addProduct }) => {
 
 const mapStateToProps = state => ({
   products: state.products.items,
-  loading: state.products.isFetching,
+  loading: state.products.isFetching || state.categories.isFetching,
 });
 
 const mapDispatchToProps = dispatch => ({

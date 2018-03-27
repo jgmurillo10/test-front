@@ -19,10 +19,15 @@ const products = (state = { category: '', isFetching: false, items: [] }, action
         items: action.products,
         category: action.category,
       });
-    case 'SET_CATEGORY_FILTER':
-      return state.items.filter(p => p.sublevel_id === +action.id);
-    case 'SEARCH':
-      return state.items.filter(p => p.name.includes(action.query));
+    case 'REQUEST_SEARCH_PRODUCTS':
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case 'RECEIVE_SEARCH_PRODUCTS':
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.products,
+      });
     default:
       return state;
   }
