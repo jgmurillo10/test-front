@@ -5,7 +5,7 @@ import MainContent from './mainContent/MainContent';
 
 const { Header, Content } = Layout;
 const headerStyle = {
-  backgroundColor: 'white', boxShadow: '0 10px 8px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.12)',
+  margin: 0, padding: 0, backgroundColor: 'white', boxShadow: '0 10px 8px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.12)',
 };
 const App = () => (
   <div>

@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Input, Icon } from 'antd';
 import FilterComponent from './FilterComponent';
+import { showFilter, search } from '../../actions';
 
 const Search = Input.Search;
-class SearchBar extends Component {
-  state = {
-    showFilter: false,
-  }
-  filter = () => {
-    return (
-      <Icon onClick={() => this.setState({showFilter: !this.state.showFilter})} type="filter" />
-    )
-  }
-  render() {
-    return (
-      <div style={{ marginBottom: 16 }}>
-        <Search
-          addonAfter={this.filter()}
-          placeholder="Buscar productos..."
-          onSearch={value => console.log(value)}
-        />
-        {this.state.showFilter?<FilterComponent />:''}
-      </div>
-    );
-  }
-  
+const SearchBar = ({ displayFilter, setFilter, search }) => {
+  const filter = () => (
+    <Icon style={{ cursor: 'pointer' }} onClick={() => setFilter()} type="filter" />
+  );
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <Search
+        addonAfter={filter()}
+        placeholder="Buscar productos..."
+        onSearch={value => search(value)}
+      />
+      {displayFilter ? <FilterComponent /> : ''}
+    </div>
+  );
 };
 
-export default SearchBar;
+const mapStateToProps = state => ({
+  displayFilter: state.displayFilter,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setFilter: () => dispatch(showFilter()),
+  search: (query) => dispatch(search(query)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

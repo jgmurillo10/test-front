@@ -1,8 +1,9 @@
 import data from './categories.json';
+
 const categories = (state = data, action) => {
   switch (action.type) {
     case 'GET_ALL':
-      return data
+      return data;
     default:
       return state;
   }

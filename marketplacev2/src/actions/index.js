@@ -1,8 +1,17 @@
+export const search = query => ({
+  type: 'SEARCH',
+  query,
+})
+
 export const addProduct = (id, quantity, product) => ({
   type: 'ADD_PRODUCT',
   id,
   quantity,
   product,
+});
+
+export const showFilter = () => ({
+  type: 'SHOW_FILTER',
 });
 
 export const deleteProduct = id => ({

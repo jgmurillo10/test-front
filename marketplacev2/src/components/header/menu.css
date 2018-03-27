@@ -1,15 +1,12 @@
-.header {
-	color: black;
-	height: 8vh;
-	align-content: flex-end !important;
-}
 .menu-container {
-	/*border: 1px solid black;*/
 	height: 8vh;
 	padding-top: 1em;
 	display: flex;
 	justify-content: center;
-	align-content: center;
+	white-space: nowrap;
+	width: 100% !important;
+	overflow: auto !important;
+	overflow-x: scroll !important;
 }
 .menu {
 	border: 1px solid black;
