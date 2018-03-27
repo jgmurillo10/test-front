@@ -1,7 +1,8 @@
-export const addProdut = (id, quantity) => ({
+export const addProduct = (id, quantity, product) => ({
   type: 'ADD_PRODUCT',
   id,
   quantity,
+  product,
 });
 
 export const deleteProduct = id => ({

@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Input, Icon } from 'antd';
+import FilterComponent from './FilterComponent';
 
 const Search = Input.Search;
-const filter = () => {
-  return (
-    <Icon onClick={() => console.log('onClickFilter')} type="filter" />
-  );
-};
-const SearchBar = () => {
-  return (
-    <div style={{ marginBottom: 16 }}>
-      <Search
-        addonAfter={filter()}
-        placeholder="Buscar productos..."
-        onSearch={value => console.log(value)}
-      />
-      <div>
+class SearchBar extends Component {
+  state = {
+    showFilter: false,
+  }
+  filter = () => {
+    return (
+      <Icon onClick={() => this.setState({showFilter: !this.state.showFilter})} type="filter" />
+    )
+  }
+  render() {
+    return (
+      <div style={{ marginBottom: 16 }}>
+        <Search
+          addonAfter={this.filter()}
+          placeholder="Buscar productos..."
+          onSearch={value => console.log(value)}
+        />
+        {this.state.showFilter?<FilterComponent />:''}
       </div>
-    </div>
-  );
+    );
+  }
+  
 };
 
 export default SearchBar;

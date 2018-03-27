@@ -5,12 +5,6 @@ const products = (state = data, action) => {
       return data;
     case 'SET_CATEGORY_FILTER':
       return data.filter(p => p.sublevel_id === +action.id);
-    case 'ADD_PRODUCT':
-      return state;
-    case 'DELETE_PRODUCT':
-      return state;
-    case 'EDIT_PRODUCT':
-      return state;
     default:
       return state;
   }

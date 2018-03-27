@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, Icon, Avatar, Row, Col } from 'antd';
 import { connect } from 'react-redux';
+import { addProduct } from '../../actions';
 
 const { Meta } = Card;
-const Products = ({ products }) => {
+const Products = ({ products, addProduct }) => {
   return (
     <Row>
       {
@@ -12,7 +13,13 @@ const Products = ({ products }) => {
             <Card
               style={{ margin: '1em' }}
               cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-              actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+              actions={[
+                <Icon type="ellipsis" />,
+                <Icon
+                  onClick={() => addProduct(p)}
+                  type="shopping-cart"
+                />
+              ]}
             >
               <Meta
                 avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
@@ -31,4 +38,8 @@ const mapStateToProps = state => ({
   products: state.products,
 });
 
-export default connect(mapStateToProps)(Products);
+const mapDispatchToProps = dispatch => ({
+  addProduct: p => dispatch(addProduct(p.id,1, p)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
