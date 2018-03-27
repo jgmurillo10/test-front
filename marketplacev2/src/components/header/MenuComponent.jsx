@@ -10,14 +10,14 @@ const MenuComponent = ({ categories, dispatch }) => {
   console.log(categories);
   const getMenu = (arr) => (
     arr.map((d) => {
-      if (d.sublevels) {
+      if (d.children) {
         return (
-          <SubMenu key={d.id} title={d.name}>
-            {getMenu(d.sublevels)}
+          <SubMenu key={d.value} title={d.label}>
+            {getMenu(d.children)}
           </SubMenu>
         );
       }
-      return (<Menu.Item key={d.id}>{d.name}</Menu.Item>);
+      return (<Menu.Item key={d.value}>{d.label}</Menu.Item>);
     })
   );
   const onClick = (e) => {
@@ -44,9 +44,9 @@ const mapStateToProps = state => ({
 
 MenuComponent.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    sublevels: PropTypes.array,
+    value: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    children: PropTypes.array,
   })).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
