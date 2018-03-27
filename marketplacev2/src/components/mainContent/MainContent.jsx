@@ -14,7 +14,7 @@ const MainContent = ({ title }) => {
 };
 
 const mapStateToProps = state => ({
-  title: state.title,
+  title: state.products.title,
 });
 
 export default connect(mapStateToProps)(MainContent);

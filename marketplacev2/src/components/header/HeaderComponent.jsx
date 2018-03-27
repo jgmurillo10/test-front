@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col, Icon } from 'antd';
+import { connect } from 'react-redux';
 import MenuComponent from './MenuComponent';
+import { fetchProducts } from '../../actions';
 import './menu.css';
 
 const sizeIcon = {
@@ -13,12 +15,12 @@ const resetHeader = {
   margin: 0,
   padding: 0, 
 };
-const HeaderComponent = () => {
+const HeaderComponent = ({ dispatch }) => {
   return (
     <div style={resetHeader}>
       <Row type="flex" justify="center" align="middle">
         <Col xs={0} sm={2} md={2} lg={2} xl={2}>
-          <Icon style={sizeIcon} type="shop" />
+          <Icon onClick={()=> dispatch(fetchProducts())} style={sizeIcon} type="shop" />
         </Col>
         <Col xs={0} sm={20} md={20} lg={20} xl={20}>
           <MenuComponent />
@@ -42,5 +44,4 @@ const HeaderComponent = () => {
     </div>
   );
 };
-
-export default HeaderComponent;
+export default connect()(HeaderComponent);

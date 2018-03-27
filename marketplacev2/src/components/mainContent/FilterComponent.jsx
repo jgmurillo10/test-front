@@ -1,8 +1,14 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Select, Radio, Slider, Switch } from 'antd';
 
-
+const Option = Select.Option;
 const FilterComponent = () => {
+  const handleChange = (e) => {
+    console.log(e.target);
+  }
+  const handleRadioChange = (e) => {
+    console.log('handleRadioChange')
+  }
   const filterStyle = {
     backgroundColor: 'white',
     marginTop: '1em',
@@ -14,16 +20,27 @@ const FilterComponent = () => {
       <Row>
         <Col span={12}>
           <h2>Ordenar</h2>
-          <p>Precio</p>
-          <p>Disponibilidad</p>
-          <p>Cantidad</p>
-          <p>Nombre</p>
+          <Select defaultValue="lucy" onChange={handleChange}>
+            <Option value="jack">Precio</Option>
+            <Option value="lucy">Disponibilidad</Option>
+            <Option value="Yiminghe">Cantidad</Option>
+            <Option value="Yiminghe">Nombre</Option>
+          </Select>
+          <Radio.Group value={"large"} onChange={handleRadioChange}>
+            <Radio.Button value="large">Ascendentemente</Radio.Button>
+            <Radio.Button value="default">Descendentemente</Radio.Button>
+          </Radio.Group>
+
+
         </Col>
         <Col span={12}>
           <h2>Filtrar</h2>
-          <p>Precio</p>
-          <p>Disponibilidad</p>
-          <p>Stock</p>
+          <Select defaultValue="lucy" onChange={handleChange}>
+            <Option value="jack">Precio</Option>
+            <Option value="lucy">Disponibilidad</Option>
+            <Option value="Yiminghe">Stock</Option>
+          </Select>
+           <Slider range defaultValue={[20, 50]} />
         </Col>
       </Row>
     </div>

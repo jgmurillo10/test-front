@@ -1,7 +1,5 @@
 import fetch from 'cross-fetch';
 
-
-
 export const requestCategories = () => ({
   type: 'REQUEST_CATEGORIES',
 });
@@ -46,9 +44,10 @@ export const fetchProducts = () => {
   };
 };
 
-export const requestProductsByCategory = category => ({
+export const requestProductsByCategory = (category, categoryName) => ({
   type: 'REQUEST_PRODUCTS_CATEGORY',
   category,
+  categoryName,
 });
 
 export const receiveProductsByCategory = (category, products) => ({
@@ -57,9 +56,9 @@ export const receiveProductsByCategory = (category, products) => ({
   products,
 });
 
-export const fetchProductsByCategory = (category) => {
+export const fetchProductsByCategory = (category, categoryName) => {
   return function (dispatch) {
-    dispatch(requestProductsByCategory(category));
+    dispatch(requestProductsByCategory(category, categoryName));
 
     return fetch(`/products/sublevel/${category}`)
       .then(

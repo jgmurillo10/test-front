@@ -21,9 +21,7 @@ const MenuComponent = ({ categories, dispatch }) => {
     })
   );
   const onClick = (e) => {
-    dispatch(fetchProductsByCategory(e.key));
-    // dispatch(setCategoryFilter(e.key));
-    dispatch(setTitle(`Productos de la subcategoría ${e.item.props.children}`));
+    dispatch(fetchProductsByCategory(e.key, e.item.props.children));
   };
 
   return (
