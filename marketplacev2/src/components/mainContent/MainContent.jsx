@@ -1,11 +1,20 @@
-import React from 'react'
-import './mainContent.css'
-const MainContent = ({ dispatch }) => {
-	return (
-		<div className="mainContent">
-			MainContent
-		</div>
-	)
-}
+import React from 'react';
+import { connect } from 'react-redux';
+import Products from './Products';
+import SearchBar from './SearchBar';
 
-export default MainContent
+const MainContent = ({ title }) => {
+  return (
+    <div style={{ margin: '1em', minHeight: '90vh' }}>
+      <h1>{title}</h1>
+      <SearchBar />
+      <Products />
+    </div>
+  );
+};
+
+const mapStateToProps = state => ({
+  title: state.title,
+});
+
+export default connect(mapStateToProps)(MainContent);

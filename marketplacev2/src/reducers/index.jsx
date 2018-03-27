@@ -1,10 +1,12 @@
-import { combineReducers } from 'redux'
-import products from './products'
-import categoryFilter from './categoryFilter'
-import visibilityFilter from './visibilityFilter'
+import { combineReducers } from 'redux';
+import products from './products';
+import categories from './categories';
+import visibilityFilter from './visibilityFilter';
+import title from './title';
 
 export default combineReducers({
-	products,
-	visibilityFilter,
-	categoryFilter
-})
+  categories,
+  products,
+  visibilityFilter,
+  title,
+});

@@ -1,59 +1,52 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Menu } from 'antd';
+import { setCategoryFilter, setTitle } from '../../actions';
+
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const MenuComponent = ({ categories, dispatch }) => {
+  let current;
+  const getMenu = (arr) => {
+    return arr.map((d) => {
+      if (d.sublevels) {
+        return (
+          <SubMenu key={d.id} title={d.name}>
+            {getMenu(d.sublevels)}
+          </SubMenu>
+        );
+      }
+      return (<Menu.Item key={d.id}>{d.name}</Menu.Item>);
+    });
+  };
+  const onClick = (e) => {
+    current = e.key;
+    dispatch(setCategoryFilter(current));
+    dispatch(setTitle(`Mostrando los productos de la subcategoría ${current}`));
+  };
+  return (
+    <div className="menu-container">
+      <Menu
+        mode="horizontal"
+        onClick={onClick}
+        selectedKeys={[current]}
+      >
+        { getMenu(categories) }
+      </Menu>
+    </div>
+  );
+};
 
-const MenuComponent = ({ dispatch }) => {
-	return (
-		<div>
-			<Menu
-		        onClick={()=>console.log('click')}
-		        mode="horizontal"
-		        style={{'border':'1px solid black'}}
-		      >
-		         <SubMenu title={<span>Bebidas</span>}>
-		          <MenuItemGroup title="Item 1">
-		            <Menu.Item key="setting:1">Option 1</Menu.Item>
-		            <Menu.Item key="setting:2">Option 2</Menu.Item>
-		          </MenuItemGroup>
-		          <MenuItemGroup title="Item 2">
-		            <Menu.Item key="setting:3">Option 3</Menu.Item>
-		            <Menu.Item key="setting:4">Option 4</Menu.Item>
-		          </MenuItemGroup>
-		        </SubMenu>
-		        <SubMenu title={<span>Desayunos</span>}>
-		          <MenuItemGroup title="Item 1">
-		            <Menu.Item key="setting:1">Option 1</Menu.Item>
-		            <Menu.Item key="setting:2">Option 2</Menu.Item>
-		          </MenuItemGroup>
-		          <MenuItemGroup title="Item 2">
-		            <Menu.Item key="setting:3">Option 3</Menu.Item>
-		            <Menu.Item key="setting:4">Option 4</Menu.Item>
-		          </MenuItemGroup>
-		        </SubMenu>
-		         <SubMenu title={<span>Almuerzos</span>}>
-		          <MenuItemGroup title="Item 1">
-		            <Menu.Item key="setting:1">Option 1</Menu.Item>
-		            <Menu.Item key="setting:2">Option 2</Menu.Item>
-		          </MenuItemGroup>
-		          <MenuItemGroup title="Item 2">
-		            <Menu.Item key="setting:3">Option 3</Menu.Item>
-		            <Menu.Item key="setting:4">Option 4</Menu.Item>
-		          </MenuItemGroup>
-		        </SubMenu>
-		        <SubMenu title={<span>Vinos</span>}>
-		          <MenuItemGroup title="Item 1">
-		            <Menu.Item key="setting:1">Option 1</Menu.Item>
-		            <Menu.Item key="setting:2">Option 2</Menu.Item>
-		          </MenuItemGroup>
-		          <MenuItemGroup title="Item 2">
-		            <Menu.Item key="setting:3">Option 3</Menu.Item>
-		            <Menu.Item key="setting:4">Option 4</Menu.Item>
-		          </MenuItemGroup>
-		        </SubMenu>
-		      </Menu>
-		</div>
-	)
-}
+const mapStateToProps = state => ({
+  categories: state.categories,
+});
 
-export default MenuComponent
+MenuComponent.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    sublevels: PropTypes.array,
+  })).isRequired,
+};
+
+export default connect(mapStateToProps)(MenuComponent);

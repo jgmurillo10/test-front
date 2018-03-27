@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+		console.log('hola')
+		d3.json('./categories.json', function(err,data) {
+			if(err) console.log(err)
+		console.log(data);
+		console.log(getMenu(data));
+		})
+
+
+
+		function getMenu(data) {
+			return data.map(d=>{
+				if(d.sublevels){
+					return `<Submenu key=${d.id} title=${d.name}>` + getMenu(d.sublevels) + "</Submenu>";
+				}
+				else{
+					return `<Menu.Item key=${d.id}>${d.name}</Menu.Item>`
+				}
+				
+			}) ;
+		}
+
+	</script>
+
+</body>
+</html>
