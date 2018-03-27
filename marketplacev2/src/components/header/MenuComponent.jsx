@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Menu } from 'antd';
-import { setCategoryFilter, setTitle, fetchProductsByCategory } from '../../actions';
+import { fetchProductsByCategory } from '../../actions';
 
 const SubMenu = Menu.SubMenu;
 const MenuComponent = ({ categories, dispatch }) => {
   let current;
-  console.log(categories);
   const getMenu = (arr) => (
     arr.map((d) => {
       if (d.children) {
