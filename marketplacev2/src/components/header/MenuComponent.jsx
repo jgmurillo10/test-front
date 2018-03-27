@@ -7,8 +7,8 @@ import { setCategoryFilter, setTitle } from '../../actions';
 const SubMenu = Menu.SubMenu;
 const MenuComponent = ({ categories, dispatch }) => {
   let current;
-  const getMenu = (arr) => {
-    return arr.map((d) => {
+  const getMenu = (arr) => (
+    arr.map((d) => {
       if (d.sublevels) {
         return (
           <SubMenu key={d.id} title={d.name}>
@@ -17,13 +17,13 @@ const MenuComponent = ({ categories, dispatch }) => {
         );
       }
       return (<Menu.Item key={d.id}>{d.name}</Menu.Item>);
-    });
-  };
+    })
+  );
   const onClick = (e) => {
-    current = e.key;
-    dispatch(setCategoryFilter(current));
-    dispatch(setTitle(`Mostrando los productos de la subcategoría ${current}`));
+    dispatch(setCategoryFilter(e.key));
+    dispatch(setTitle(`Mostrando los productos de la subcategoría ${e.item.props.children}`));
   };
+
   return (
     <div className="menu-container">
       <Menu
@@ -47,6 +47,7 @@ MenuComponent.propTypes = {
     name: PropTypes.string.isRequired,
     sublevels: PropTypes.array,
   })).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(MenuComponent);
