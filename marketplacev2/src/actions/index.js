@@ -82,6 +82,20 @@ export const receiveSearchProducts = (query,products) => ({
 });
 
 export const fetchSearchProducts = (category, query) => {
+  if (category === '') {
+    return function (dispatch) {
+      dispatch(requestSearchProducts());
+      let q = '/products';
+      return fetch(q)
+        .then(
+          response => response.json(),
+          error => console.log('An error ocurred', error),
+        )
+        .then(json => {
+          dispatch(receiveSearchProducts(query,json.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))));
+        });
+    };
+  }
   return function (dispatch) {
     dispatch(requestSearchProducts());
     let q = `/products/sublevel/${category}/search?name=${query}`;
