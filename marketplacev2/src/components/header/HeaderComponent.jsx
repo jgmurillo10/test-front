@@ -7,12 +7,11 @@ const sizeIcon = {
   fontSize: 24,
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'baseline',
   cursor: 'pointer',
 };
 const resetHeader = {
   margin: 0,
-  padding: 0,
+  padding: 0, 
 };
 const HeaderComponent = () => {
   return (
@@ -28,10 +27,15 @@ const HeaderComponent = () => {
           <Icon style={sizeIcon} type="shopping-cart" />
         </Col>
       </Row>
-      
-      <Row>
-        <Col xs={24} sm={0} md={0} lg={0} xl={0}>
-          Responsive menu
+      <Row type="flex" justify="space-between" align="middle">
+        <Col xs={8} sm={0} md={0} lg={0} xl={0}>
+          <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="menu-fold" />
+        </Col>
+        <Col xs={8} sm={0} md={0} lg={0} xl={0}>
+          <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="shop" />
+        </Col>
+        <Col xs={8} sm={0} md={0} lg={0} xl={0}>
+          <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="shopping-cart" />
         </Col>
       </Row>
 

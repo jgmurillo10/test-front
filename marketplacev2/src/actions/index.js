@@ -1,3 +1,9 @@
+import fetch from 'cross-fetch';
+
+export const getProducts = category => {
+  
+};
+
 export const search = query => ({
   type: 'SEARCH',
   query,
