@@ -1,4 +1,9 @@
-const categories = (state = { selected: '', isFetching: false, items: [] }, action) => {
+const initialState = {
+  selected: '',
+  isFetching: false,
+  items: [],
+};
+const categories = (state = initialState, action) => {
   switch (action.type) {
     case 'REQUEST_CATEGORIES':
       return Object.assign({}, state, {

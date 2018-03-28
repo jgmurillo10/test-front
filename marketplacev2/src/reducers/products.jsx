@@ -1,11 +1,12 @@
-const products = (state = {
+const initialState = {
   selected: {},
   toggleProduct: false,
   title: 'Todos los productos',
   category: -1,
   isFetching: false,
   items: [],
-}, action) => {
+};
+const products = (state = initialState, action) => {
   switch (action.type) {
     case 'REQUEST_PRODUCTS':
       return Object.assign({}, state, {

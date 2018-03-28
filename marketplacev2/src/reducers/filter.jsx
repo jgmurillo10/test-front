@@ -1,10 +1,11 @@
-const filter = (state = {
+const initialState = {
   displayFilter: false,
   sortName: '',
   filterName: '',
   desc: false,
   disabled: true,
-}, action) => {
+};
+const filter = (state = initialState, action) => {
   switch (action.type) {
     case 'SHOW_FILTER':
       return Object.assign({}, state, {

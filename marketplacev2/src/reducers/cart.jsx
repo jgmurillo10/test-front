@@ -1,4 +1,8 @@
-const cart = (state = { visible: false, products: [] }, action) => {
+const initialState = JSON.parse(localStorage.getItem('cart')) || {
+  visible: false,
+  products: [],
+};
+const cart = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PRODUCT':
       const p = state.products.filter(d => d.id === action.product.id);
@@ -8,15 +12,19 @@ const cart = (state = { visible: false, products: [] }, action) => {
         n = state.products[i];
         n.order += action.quantity;
         state.products[i] = n;
-        return Object.assign({}, state, {
+        const newStateAdd = Object.assign({}, state, {
           products: [...state.products],
         });
+        localStorage.setItem('cart', JSON.stringify(newStateAdd));
+        return newStateAdd;
       }
       else {
         n = {...action.product, order: action.quantity};
-        return Object.assign({}, state, {
+        const newState = Object.assign({}, state, {
           products: [...state.products, n],
         });
+        localStorage.setItem('cart', JSON.stringify(newState));
+        return newState;
       }
     case 'EDIT_PRODUCT':
       const q = state.products.filter(d => d.id === action.product.id);
@@ -25,22 +33,30 @@ const cart = (state = { visible: false, products: [] }, action) => {
       m = state.products[i];
       m.order = action.quantity;
       state.products[i] = m;
-      return Object.assign({}, state, {
+      const newStateEdit = Object.assign({}, state, {
         products: [...state.products],
       });
+      localStorage.setItem('cart', JSON.stringify(newStateEdit));
+      return newStateEdit;
     case 'TOGGLE_CART':
-      return Object.assign({}, state, {
+      const newStateToggle = Object.assign({}, state, {
         visible: !state.visible,
       });
+      localStorage.setItem('cart', JSON.stringify(newStateToggle));
+      return newStateToggle;
     case 'DELETE_PRODUCT':
       const products = state.products.filter(p => p.id !== action.product.id);
-      return Object.assign({}, state, {
+      const newStateDelete = Object.assign({}, state, {
         products,
       });
+      localStorage.setItem('cart', JSON.stringify(newStateDelete));
+      return newStateDelete;
     case 'DELETE_PRODUCTS':
-      return Object.assign({}, state, {
+      const newStateDeleteAll = Object.assign({}, state, {
         products: [],
       });
+      localStorage.setItem('cart', JSON.stringify(newStateDeleteAll));
+      return newStateDeleteAll;
     default:
       return state;
   }
