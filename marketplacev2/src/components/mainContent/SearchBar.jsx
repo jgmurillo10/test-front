@@ -24,7 +24,7 @@ const SearchBar = ({
           }
         }
       }
-      type="filter" 
+      type="filter"
     />
   );
   return (

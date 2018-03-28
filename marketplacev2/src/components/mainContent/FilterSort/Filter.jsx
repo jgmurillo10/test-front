@@ -1,9 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Checkbox, Select, Slider } from 'antd';
 import { fetchAvailability, setFilterName, fetchMinMax } from '../../../actions';
 
-const Filter = ({ category, disabled, minPrice, maxPrice, minQuantity, maxQuantity, filterName, fetchAvailability, setFilterName, fetchMinMax }) => {
+const Filter = ({
+  category,
+  disabled,
+  minPrice,
+  maxPrice,
+  minQuantity,
+  maxQuantity,
+  filterName,
+  fetchAvailability,
+  setFilterName,
+  fetchMinMax,
+}) => {
   const Option = Select.Option;
   const handleChangeFilter = (value) => {
     setFilterName(value);
@@ -30,12 +42,12 @@ const Filter = ({ category, disabled, minPrice, maxPrice, minQuantity, maxQuanti
           </Select>
         </Col>
         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-          <Slider 
-            onAfterChange={onAfterChange} 
-            disabled={disabled} 
-            style={{ width: 150 }} 
-            range 
-            defaultValue={filterName === 'price' ? [minPrice,maxPrice] : [minQuantity,maxQuantity]} 
+          <Slider
+            onAfterChange={onAfterChange}
+            disabled={disabled}
+            style={{ width: 150 }}
+            range
+            defaultValue={filterName === 'price' ? [minPrice, maxPrice] : [minQuantity, maxQuantity]}
             min={filterName === 'price' ? minPrice : minQuantity}
             max={filterName === 'price' ? maxPrice : maxQuantity}
           />
@@ -45,7 +57,7 @@ const Filter = ({ category, disabled, minPrice, maxPrice, minQuantity, maxQuanti
         </Col>
       </Row>
     </Col>
-  )
+  );
 };
 
 const mapStateToProps = state => ({
@@ -60,8 +72,23 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchAvailability: (category, available) => dispatch(fetchAvailability(category, available)),
-  setFilterName: (filterName) => dispatch(setFilterName(filterName)),
-  fetchMinMax: (category, filter, min, max, minPrice, maxPrice) => dispatch(fetchMinMax(category, filter, min, max, minPrice, maxPrice)),
+  setFilterName: filterName => dispatch(setFilterName(filterName)),
+  fetchMinMax:
+    (category, filter, min, max, minPrice, maxPrice) =>
+      dispatch(fetchMinMax(category, filter, min, max, minPrice, maxPrice)),
 });
+
+Filter.propTypes = {
+  category: PropTypes.number.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  minPrice: PropTypes.number.isRequired,
+  maxPrice: PropTypes.number.isRequired,
+  minQuantity: PropTypes.number.isRequired,
+  maxQuantity: PropTypes.number.isRequired,
+  filterName: PropTypes.string.isRequired,
+  fetchAvailability: PropTypes.func.isRequired,
+  setFilterName: PropTypes.func.isRequired,
+  fetchMinMax: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

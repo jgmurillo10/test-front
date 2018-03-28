@@ -258,7 +258,7 @@ export const fetchAvailability = (category, available) => {
         response => response.json(),
         error => dispatch(errorAvailability(error)),
       )
-      .then(json => dispatch(receiveAvailability(json)))
+      .then(json => dispatch(receiveAvailability(json)));
   }
 };
 
@@ -278,12 +278,11 @@ export const fetchMinMax = (category, filter, min, max, minPrice, maxPrice) => {
     if (filter === 'quantity') {
       q += `&min_price=${minPrice}&max_price=${maxPrice}`;
     }
-    console.log(q);
     return fetch(q)
       .then(response => response.json())
       .then(json => dispatch(receiveMinMax(json)));
-  }
-}
+  };
+};
 
 const requestStats = () => ({
   type: 'REQUEST_STATS',
@@ -297,19 +296,19 @@ const receiveStats = (product) => ({
 export const fetchStats = () => {
   return function (dispatch) {
     dispatch(requestStats());
-    let queries = [
+    const queries = [
       '/products/min/price',
       '/products/min/quantity',
       '/products/max/price',
       '/products/max/quantity',
     ];
-    const res = queries.map(q=> {
-      fetch(q)
+    queries.map((q) => {
+      return fetch(q)
         .then(response => response.json())
         .then(json => dispatch(receiveStats(json)));
     });
-  }
-}
+  };
+};
 
 export const setStockFilter = (min, max) => ({
   type: 'SET_STOCK_FILTER',

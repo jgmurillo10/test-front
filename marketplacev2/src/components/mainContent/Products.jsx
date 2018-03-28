@@ -27,7 +27,7 @@ const Products = ({ products, loading, visible, selected, addProductCart, toggle
                   <span disabled={!p.available}>
                     <Icon
                       onClick={() => showConfirm(p, addProductCart)}
-                      type="shopping-cart"  
+                      type="shopping-cart"
                     />
                   </span>,
                 ]}
@@ -58,7 +58,13 @@ const Products = ({ products, loading, visible, selected, addProductCart, toggle
         onCancel={toggleProduct}
       >
         <p>id: {selected.id}</p>
-        <p>disponible {selected.available ? (<Icon type="check-circle-o" />): (<Icon type="close-circle-o" />)}</p>
+        <p>disponible
+          {
+            selected.available ?
+            (<Icon type="check-circle-o" />) :
+            (<Icon type="close-circle-o" />)
+          }
+        </p>
         <p>precio: $ {selected.price}</p>
         <p>cantidad: {selected.quantity} (en stock)</p>
       </Modal>
@@ -86,6 +92,8 @@ Products.propTypes = {
     available: PropTypes.bool.isRequired,
     quantity: PropTypes.number.isRequired,
     sublevel_id: PropTypes.number.isRequired,
+    visible: PropTypes.bool,
+    selected: PropTypes.object,
   })).isRequired,
   loading: PropTypes.bool.isRequired,
   addProductCart: PropTypes.func.isRequired,

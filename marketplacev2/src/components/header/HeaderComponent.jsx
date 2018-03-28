@@ -21,7 +21,7 @@ let value;
 const getSublevelName = (arr, id) => {
   arr.forEach(d => {
     if (d.children) {
-      getSublevelName(d.children, id);
+      return getSublevelName(d.children, id);
     } else {
       if (d.value === id) {
         value = d;
@@ -60,11 +60,11 @@ const HeaderComponent = ({ categories, fetchProducts, fetchProductsByCategory })
       <Col xs={8} sm={0} md={0} lg={0} xl={0}>
         <Cascader
           options={categories}
-          onChange={(e) => onChange(e,fetchProducts, fetchProductsByCategory, categories)}
+          onChange={e => onChange(e, fetchProducts, fetchProductsByCategory, categories)}
           placeholder="Menu"
         />
       </Col>
-      <Col xs={8} sm={0} md={0} lg={0} xl={0}  style={{ paddingTop: '0em' }}>
+      <Col xs={8} sm={0} md={0} lg={0} xl={0} style={{ paddingTop: '0em' }}>
         <Cart />
       </Col>
     </Row>
@@ -75,6 +75,7 @@ const HeaderComponent = ({ categories, fetchProducts, fetchProductsByCategory })
 HeaderComponent.propTypes = {
   categories: PropTypes.array.isRequired,
   fetchProducts: PropTypes.func.isRequired,
+  fetchProductsByCategory: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -83,7 +84,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
-  fetchProductsByCategory: (category, categoryName) => dispatch(fetchProductsByCategory(category, categoryName)),
-})
+  fetchProductsByCategory:
+    (category, categoryName) => dispatch(fetchProductsByCategory(category, categoryName)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

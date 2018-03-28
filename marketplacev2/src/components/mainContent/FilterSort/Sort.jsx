@@ -1,14 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, Row, Select, Radio } from 'antd';
 import { fetchSort, setSortName, setDesc } from '../../../actions';
 
-const Sort = ({ category, sortName, desc, disabled, sort, setSort, setDesc }) => {
+const Sort = ({ 
+  category,
+  sortName,
+  desc,
+  disabled,
+  sort,
+  setSort,
+  setDesc
+}) => {
   const Option = Select.Option;
   const handleChangeSort = (value) => {
     if (value !== '-') {
       setSort(value);
-      sort(category, value, desc);  
+      sort(category, value, desc);
     }
   };
   const handleChangeRadio = (e) => {
@@ -56,5 +65,15 @@ const mapDispatchToProps = dispatch => ({
   setSort: filterName => dispatch(setSortName(filterName)),
   setDesc: desc => dispatch(setDesc(desc)),
 });
+
+Sort.propTypes = {
+  category: PropTypes.number.isRequired,
+  sortName: PropTypes.string.isRequired,
+  desc: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  sort: PropTypes.func.isRequired,
+  setSort: PropTypes.func.isRequired,
+  setDesc: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sort);
