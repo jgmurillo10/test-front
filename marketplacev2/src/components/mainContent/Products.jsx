@@ -8,13 +8,6 @@ import './spinner.css';
 
 const { Meta } = Card;
 const Products = ({ products, loading, addProductCart }) => {
-  // if (loading) {
-  //   return (
-  //     <div className="spinner">
-  //       <Icon type="loading" />
-  //     </div>
-  //   );
-  // }
   return (
     <div>
       <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>

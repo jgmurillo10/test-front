@@ -188,13 +188,13 @@ export const toggleCart = () => ({
   type: 'TOGGLE_CART',
 });
 
-export const deleteProduct = id => ({
+export const deleteProduct = product => ({
   type: 'DELETE_PRODUCT',
-  id,
+  product,
 });
 
-export const buyCart = () => ({
-  type: 'BUY_CART',
+export const deleteProducts = () => ({
+  type: 'DELETE_PRODUCTS',
 });
 
 export const setTitle = title => ({

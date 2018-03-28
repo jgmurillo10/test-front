@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal, Icon, Button, Card, Row, Col } from 'antd';
+import { Modal, Icon, Button, Card, Row, Col, Popconfirm, message } from 'antd';
 import { connect } from 'react-redux';
-import { toggleCart } from '../../actions';
+import { toggleCart, deleteProduct, deleteProducts, addProduct } from '../../actions';
+import showConfirm from './../mainContent/Confirm';
 
 const sizeIcon = {
   fontSize: 24,
@@ -9,7 +10,7 @@ const sizeIcon = {
   justifyContent: 'center',
   cursor: 'pointer',
 };
-const Cart = ({ visible, products, toggle }) => (
+const Cart = ({ visible, products, toggle, deleteProduct, deleteProducts, addProductCart }) => (
   <div>
     <Icon style={sizeIcon} onClick={toggle} type="shopping-cart" />
     <Modal
@@ -19,7 +20,7 @@ const Cart = ({ visible, products, toggle }) => (
       onCancel={toggle}
       footer={[
         <Button key="back" onClick={toggle}>Seguir comprando</Button>,
-        <Button key="submit" type="primary" onClick={toggle} disabled={products.length === 0}>
+        <Button key="submit" type="primary" onClick={deleteProducts} disabled={products.length === 0}>
           Comprar todo
         </Button>,
       ]}
@@ -29,12 +30,23 @@ const Cart = ({ visible, products, toggle }) => (
       }
       <Row gutter={16}>
         {
-          products.map((p,i) => (
+          products.map((p, i) => (
             <Col key={p.id} span={4} md={6} sm={12} xs={24}>
               <Card
                 key={p.id}
                 title={p.name}
-                extra={[<Icon key={p.id} type="delete" />, <Icon key={i} type="edit" />]}
+                extra={
+                  [
+                    <Popconfirm 
+                      title="¿Estás seguro de eliminar este producto?" 
+                      onConfirm={()=>{deleteProduct(p);message.success(`Eliminaste ${p.name} de tu lista.`);toggle()}}
+                      okText="Sí" 
+                      cancelText="No">
+                      <Icon style={{ marginRight: '1em', cursor: 'pointer' }} key={p.id} type="delete" />
+                    </Popconfirm>,
+                    <Icon onClick={()=>showConfirm(p,addProductCart)} style={{ cursor: 'pointer' }} key={i} type="edit" />,
+                  ]
+                }
               >
                 <p>{p.order} unidades</p>
               </Card>
@@ -53,6 +65,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggle: () => dispatch(toggleCart()),
+  deleteProduct: (p) => dispatch(deleteProduct(p)),
+  deleteProducts: () => {dispatch(deleteProducts()); dispatch(toggleCart())},
+  addProductCart: (p, q) => dispatch(addProduct(p.id, q, p)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
