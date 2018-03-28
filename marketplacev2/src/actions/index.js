@@ -225,10 +225,37 @@ export const setPriceFilter = (min, max) => ({
   max,
 });
 
-export const setAvaibilityFilter = available => ({
-  type: 'SET_AVAIBILITY_FILTER',
-  available,
+export const requestAvaibility = available => ({
+  type: 'REQUEST_AVAIBILITY',
 });
+
+export const receiveAvailability = products => ({
+  type: 'RECEIVE_AVAIBILITY',
+  products,
+});
+
+export const errorAvailability = error => ({
+  type: 'ERROR_AVAIBILITY',
+  error,
+});
+
+export const fetchAvailability = (category, available) => {
+  return function (dispatch) {
+    dispatch(requestAvaibility(available));
+    let q;
+    if (available) {
+      q = `/products/sublevel/${category}/available`;
+    } else {
+      q = `/products/sublevel/${category}`;
+    }
+    return fetch(q)
+      .then(
+        response => response.json(),
+        error => dispatch(errorAvailability(error)),
+      )
+      .then(json => dispatch(receiveAvailability(json)))
+  }
+};
 
 export const setStockFilter = (min, max) => ({
   type: 'SET_STOCK_FILTER',

@@ -6,8 +6,10 @@ import { fetchSort, setSortName, setDesc } from '../../../actions';
 const Sort = ({ category, sortName, filterName, desc, disabled, sort, setSort, setDesc }) => {
   const Option = Select.Option;
   const handleChangeSort = (value) => {
-    setSort(value);
-    sort(category, value, desc);
+    if (value !== '-') {
+      setSort(value);
+      sort(category, value, desc);  
+    }
   };
   const handleChangeRadio = (e) => {
     setDesc(e.target.value);
@@ -23,7 +25,7 @@ const Sort = ({ category, sortName, filterName, desc, disabled, sort, setSort, s
             style={{ width: 150, paddingRight: '0.5em' }}
             onChange={handleChangeSort}
           >
-            <Option value="noSort"> - </Option>
+            <Option value="noSort">-</Option>
             <Option value="price">Precio</Option>
             <Option value="available">Disponibilidad</Option>
             <Option value="quantity">Cantidad</Option>

@@ -47,6 +47,15 @@ const products = (state = {
         isFetching: false,
         items: action.products,
       });
+    case 'REQUEST_AVAIBILITY':
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case 'RECEIVE_AVAIBILITY':
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.products
+      })
     case 'TOGGLE_PRODUCT':
       return Object.assign({}, state, {
         toggleProduct: !state.toggleProduct,
