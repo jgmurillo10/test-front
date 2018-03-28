@@ -10,8 +10,6 @@ const Sort = ({ category, sortName, filterName, desc, disabled, sort, setSort, s
     sort(category, value, desc);
   };
   const handleChangeRadio = (e) => {
-    console.log('handleChangeRadio', e.target.value);
-    //change desc state
     setDesc(e.target.value);
     sort(category, sortName, e.target.value);
   };
