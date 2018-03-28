@@ -20,6 +20,14 @@ const filter = (state = {
       return Object.assign({}, state, {
         desc: action.desc,
       });
+    case 'RESET_FILTER':
+      return Object.assign({}, state, {
+        displayFilter: false,
+        sortName: '',
+        filterName: '',
+        desc: false,
+        disabled: true,
+      });
     default:
       return state;
   }

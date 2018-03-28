@@ -43,6 +43,7 @@ const errorProducts = error => ({
 export const fetchProducts = () => {
   return function (dispatch) {
     dispatch(requestProducts());
+    dispatch(resetFilter());
 
     return fetch('/products')
       .then(
@@ -73,7 +74,8 @@ const errorProductsByCategory = error => ({
 export const fetchProductsByCategory = (category, categoryName) => {
   return function (dispatch) {
     dispatch(requestProductsByCategory(category, categoryName));
-
+    dispatch(resetFilter());
+    
     return fetch(`/products/sublevel/${category}`)
       .then(
         response => response.json(),
@@ -172,6 +174,10 @@ export const setSortName = filterName => ({
 export const setDesc = desc => ({
   type: 'SET_DESC',
   desc,
+});
+
+export const resetFilter = () => ({
+  type: 'RESET_FILTER',
 });
 
 export const showFilter = () => ({
