@@ -62,6 +62,10 @@ const products = (state = initialState, action) => {
         toggleProduct: !state.toggleProduct,
         selected: action.product,
       });
+    case 'RECEIVE_MIN_MAX':
+      return Object.assign({}, state, {
+        items: action.products,
+      });
     default:
       return state;
   }

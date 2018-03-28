@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Col, Row, Select, Radio } from 'antd';
 import { fetchSort, setSortName, setDesc } from '../../../actions';
 
-const Sort = ({ category, sortName, filterName, desc, disabled, sort, setSort, setDesc }) => {
+const Sort = ({ category, sortName, desc, disabled, sort, setSort, setDesc }) => {
   const Option = Select.Option;
   const handleChangeSort = (value) => {
     if (value !== '-') {
@@ -47,9 +47,8 @@ const Sort = ({ category, sortName, filterName, desc, disabled, sort, setSort, s
 const mapStateToProps = state => ({
   category: state.products.category,
   sortName: state.filter.sortName,
-  filterName: state.filter.filterName,
   desc: state.filter.desc,
-  disabled: state.filter.disabled,
+  disabled: state.filter.disabledSort,
 });
 
 const mapDispatchToProps = dispatch => ({

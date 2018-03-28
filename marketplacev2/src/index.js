@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
 import App from './components/App';
 import rootReducer from './reducers';
-import { fetchProducts, fetchCategories } from './actions';
+import { fetchProducts, fetchCategories, fetchStats } from './actions';
 import registerServiceWorker from './registerServiceWorker';
 import './App.css';
 
@@ -20,6 +20,7 @@ const store = createStore(
 );
 store.dispatch(fetchProducts());
 store.dispatch(fetchCategories());
+store.dispatch(fetchStats());
 
 render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

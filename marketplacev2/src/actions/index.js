@@ -178,8 +178,13 @@ export const toggleProduct = product => ({
   product,
 });
 
-export const setSortName = filterName => ({
+export const setSortName = sortName => ({
   type: 'SET_SORT_NAME',
+  sortName,
+});
+
+export const setFilterName = filterName => ({
+  type: 'SET_FILTER_NAME',
   filterName,
 });
 
@@ -256,6 +261,52 @@ export const fetchAvailability = (category, available) => {
       .then(json => dispatch(receiveAvailability(json)))
   }
 };
+
+const requestMinMax = () => ({
+  type: 'REQUEST_MIN_MAX',
+});
+
+const receiveMinMax = products => ({
+  type: 'RECEIVE_MIN_MAX',
+  products,
+});
+
+export const fetchMinMax = (category, filter, min, max) => {
+  return function (dispatch) {
+    dispatch(requestMinMax());
+    let q = `/products/sublevel/${category}?min_${filter}=${min}&max_${filter}=${max}`;
+    console.log(q);
+    return fetch(q)
+      .then(response => response.json())
+      .then(json => dispatch(receiveMinMax(json)));
+  }
+}
+
+const requestStats = () => ({
+  type: 'REQUEST_STATS',
+});
+
+const receiveStats = (product) => ({
+  type: 'RECEIVE_STATS',
+  product,
+});
+
+export const fetchStats = () => {
+  return function (dispatch) {
+    dispatch(requestStats());
+    let queries = [
+      '/products/min/price',
+      '/products/min/quantity',
+      '/products/max/price',
+      '/products/max/quantity',
+    ];
+    const res = queries.map(q=> {
+      fetch(q)
+        .then(response => response.json())
+        .then(json => dispatch(receiveStats(json)));
+    });
+  }
+}
 
 export const setStockFilter = (min, max) => ({
   type: 'SET_STOCK_FILTER',
