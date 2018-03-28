@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Icon } from 'antd';
 import { connect } from 'react-redux';
 import MenuComponent from './MenuComponent';
+import Cart from './Cart';
 import { fetchProducts } from '../../actions';
 import './menu.css';
 
@@ -26,7 +27,7 @@ const HeaderComponent = ({ dispatch }) => (
         <MenuComponent />
       </Col>
       <Col xs={{ span: 0 }} sm={2} md={2} lg={2} xl={2}>
-        <Icon style={sizeIcon} type="shopping-cart" />
+        <Cart />
       </Col>
     </Row>
     <Row type="flex" justify="space-between" align="middle">
@@ -34,10 +35,10 @@ const HeaderComponent = ({ dispatch }) => (
         <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="menu-fold" />
       </Col>
       <Col xs={8} sm={0} md={0} lg={0} xl={0}>
-        <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="shop" />
+        <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="shop" onClick={() => dispatch(fetchProducts())} />
       </Col>
-      <Col xs={8} sm={0} md={0} lg={0} xl={0}>
-        <Icon style={Object.assign({}, sizeIcon, { paddingTop: '1em' })} type="shopping-cart" />
+      <Col xs={8} sm={0} md={0} lg={0} xl={0}  style={{ paddingTop: '1.5em' }}>
+        <Cart />
       </Col>
     </Row>
 

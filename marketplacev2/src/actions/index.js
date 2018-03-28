@@ -75,7 +75,7 @@ export const fetchProductsByCategory = (category, categoryName) => {
   return function (dispatch) {
     dispatch(requestProductsByCategory(category, categoryName));
     dispatch(resetFilter());
-    
+
     return fetch(`/products/sublevel/${category}`)
       .then(
         response => response.json(),
@@ -182,6 +182,10 @@ export const resetFilter = () => ({
 
 export const showFilter = () => ({
   type: 'SHOW_FILTER',
+});
+
+export const toggleCart = () => ({
+  type: 'TOGGLE_CART',
 });
 
 export const deleteProduct = id => ({

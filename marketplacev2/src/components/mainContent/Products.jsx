@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Icon, Avatar, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { addProduct } from '../../actions';
+import showConfirm from './Confirm';
 import './spinner.css';
 
 const { Meta } = Card;
@@ -27,7 +28,7 @@ const Products = ({ products, loading, addProductCart }) => {
                 actions={[
                   <Icon type="ellipsis" />,
                   <Icon
-                    onClick={() => addProductCart(p)}
+                    onClick={() => showConfirm(p, addProductCart)}
                     type="shopping-cart"
                   />,
                 ]}
@@ -52,7 +53,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addProductCart: p => dispatch(addProduct(p.id, 1, p)),
+  addProductCart: (p,q) => dispatch(addProduct(p.id, q, p)),
 });
 
 Products.propTypes = {
