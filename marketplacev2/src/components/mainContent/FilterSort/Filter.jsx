@@ -6,18 +6,13 @@ import { fetchAvailability, setFilterName, fetchMinMax } from '../../../actions'
 const Filter = ({ category, disabled, minPrice, maxPrice, minQuantity, maxQuantity, filterName, fetchAvailability, setFilterName, fetchMinMax }) => {
   const Option = Select.Option;
   const handleChangeFilter = (value) => {
-    console.log('handleChangeFilter', value);
     setFilterName(value);
-    
-
   };
   const onChangeCheckBox = (e) => {
-    console.log('onChangeCheckBox', e.target.checked);
     fetchAvailability(category, e.target.checked);
   };
   const onAfterChange = (value) => {
-    console.log('onAfterChange',value);
-    fetchMinMax(category, filterName, value[0], value[1]);
+    fetchMinMax(category, filterName, value[0], value[1], minPrice, maxPrice);
   };
   return (
     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -66,7 +61,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchAvailability: (category, available) => dispatch(fetchAvailability(category, available)),
   setFilterName: (filterName) => dispatch(setFilterName(filterName)),
-  fetchMinMax: (category, filter, min, max) => dispatch(fetchMinMax(category, filter, min, max)),
+  fetchMinMax: (category, filter, min, max, minPrice, maxPrice) => dispatch(fetchMinMax(category, filter, min, max, minPrice, maxPrice)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

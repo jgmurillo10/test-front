@@ -271,10 +271,13 @@ const receiveMinMax = products => ({
   products,
 });
 
-export const fetchMinMax = (category, filter, min, max) => {
+export const fetchMinMax = (category, filter, min, max, minPrice, maxPrice) => {
   return function (dispatch) {
     dispatch(requestMinMax());
     let q = `/products/sublevel/${category}?min_${filter}=${min}&max_${filter}=${max}`;
+    if (filter === 'quantity') {
+      q += `&min_price=${minPrice}&max_price=${maxPrice}`;
+    }
     console.log(q);
     return fetch(q)
       .then(response => response.json())
