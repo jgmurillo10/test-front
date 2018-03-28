@@ -166,6 +166,13 @@ export const addProduct = (id, quantity, product) => ({
   product,
 });
 
+export const editProduct = (id,quantity, product) => ({
+  type: 'EDIT_PRODUCT',
+  id,
+  quantity,
+  product,
+});
+
 export const setSortName = filterName => ({
   type: 'SET_SORT_NAME',
   filterName,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Icon, Button, Card, Row, Col, Popconfirm, message } from 'antd';
 import { connect } from 'react-redux';
-import { toggleCart, deleteProduct, deleteProducts, addProduct } from '../../actions';
+import { toggleCart, deleteProduct, deleteProducts, editProduct } from '../../actions';
 import showConfirm from './../mainContent/Confirm';
 
 const sizeIcon = {
@@ -10,7 +10,7 @@ const sizeIcon = {
   justifyContent: 'center',
   cursor: 'pointer',
 };
-const Cart = ({ visible, products, toggle, deleteProduct, deleteProducts, addProductCart }) => (
+const Cart = ({ visible, products, toggle, deleteProduct, deleteProducts, addProductCart, editProductCart }) => (
   <div>
     <Icon style={sizeIcon} onClick={toggle} type="shopping-cart" />
     <Modal
@@ -45,12 +45,12 @@ const Cart = ({ visible, products, toggle, deleteProduct, deleteProducts, addPro
                     <Popconfirm
                       key={p.id}
                       title="¿Estás seguro de eliminar este producto?" 
-                      onConfirm={()=>{deleteProduct(p);message.success(`Eliminaste ${p.name} de tu lista.`);toggle()}}
+                      onConfirm={()=>{deleteProduct(p);message.success(`Eliminaste ${p.name} de tu lista.`)}}
                       okText="Sí" 
                       cancelText="No">
                       <Icon style={{ marginRight: '1em', cursor: 'pointer' }} type="delete" />
                     </Popconfirm>,
-                    <Icon onClick={()=>showConfirm(p,addProductCart)} style={{ cursor: 'pointer' }} key={i} type="edit" />,
+                    <Icon onClick={()=>showConfirm(p,editProductCart)} style={{ cursor: 'pointer' }} key={i} type="edit" />,
                   ]
                 }
               >
@@ -73,7 +73,7 @@ const mapDispatchToProps = dispatch => ({
   toggle: () => dispatch(toggleCart()),
   deleteProduct: (p) => dispatch(deleteProduct(p)),
   deleteProducts: () => {dispatch(deleteProducts()); dispatch(toggleCart())},
-  addProductCart: (p, q) => dispatch(addProduct(p.id, q, p)),
+  editProductCart: (p, q) => dispatch(editProduct(p.id, q, p)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
