@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Input, Icon } from 'antd';
+import { Input, Icon, message } from 'antd';
 import FilterSortComponent from './FilterSortComponent';
 import { showFilter, fetchSearchProducts } from '../../actions';
 
@@ -13,7 +13,19 @@ const SearchBar = ({
   search,
 }) => {
   const filter = () => (
-    <Icon style={{ cursor: 'pointer' }} onClick={() => setFilter()} type="filter" />
+    <Icon
+      style={{ cursor: 'pointer' }}
+      onClick={
+        () => {
+          if (category !== -1) {
+            setFilter();
+          } else {
+            message.error('Sólo puedes filtrar luego de seleccionar una categoría.');
+          }
+        }
+      }
+      type="filter" 
+    />
   );
   return (
     <div style={{ margin: '1em' }}>
@@ -22,7 +34,7 @@ const SearchBar = ({
         placeholder="Buscar productos..."
         onSearch={value => search(category, value)}
       />
-      {displayFilter ? <FilterSortComponent /> : ''}
+      {(displayFilter && category !== -1) ? <FilterSortComponent /> : ''}
     </div>
   );
 };
