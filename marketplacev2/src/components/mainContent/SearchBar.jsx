@@ -28,7 +28,7 @@ const SearchBar = ({
 };
 
 const mapStateToProps = state => ({
-  displayFilter: state.displayFilter,
+  displayFilter: state.filter.displayFilter,
   category: state.products.category,
 });
 

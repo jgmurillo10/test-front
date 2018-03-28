@@ -36,6 +36,15 @@ const products = (state = {
         isFetching: false,
         items: action.products,
       });
+    case 'REQUEST_SORT':
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case 'RECEIVE_SORT':
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.products,
+      });
     default:
       return state;
   }

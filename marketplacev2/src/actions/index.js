@@ -27,16 +27,16 @@ export const fetchCategories = () => {
   };
 };
 
-export const requestProducts = () => ({
+const requestProducts = () => ({
   type: 'REQUEST_PRODUCTS',
 });
 
-export const receiveProducts = products => ({
+const receiveProducts = products => ({
   type: 'RECEIVE_PRODUCTS',
   products,
 });
 
-export const errorProducts = error => ({
+const errorProducts = error => ({
   type: 'ERROR_PRODUCTS',
   error,
 });
@@ -53,19 +53,19 @@ export const fetchProducts = () => {
   };
 };
 
-export const requestProductsByCategory = (category, categoryName) => ({
+const requestProductsByCategory = (category, categoryName) => ({
   type: 'REQUEST_PRODUCTS_CATEGORY',
   category,
   categoryName,
 });
 
-export const receiveProductsByCategory = (category, products) => ({
+const receiveProductsByCategory = (category, products) => ({
   type: 'RECEIVE_PRODUCTS_CATEGORY',
   category,
   products,
 });
 
-export const errorProductsByCategory = error => ({
+const errorProductsByCategory = error => ({
   type: 'ERROR_PRODUCTS_CATEGORY',
   error,
 });
@@ -83,18 +83,18 @@ export const fetchProductsByCategory = (category, categoryName) => {
   };
 };
 
-export const requestSearchProducts = query => ({
+const requestSearchProducts = query => ({
   type: 'REQUEST_SEARCH_PRODUCTS',
   query,
 });
 
-export const receiveSearchProducts = (query, products) => ({
+const receiveSearchProducts = (query, products) => ({
   type: 'RECEIVE_SEARCH_PRODUCTS',
   query,
   products,
 });
 
-export const errorSearchProducts = error => ({
+const errorSearchProducts = error => ({
   type: 'ERROR_SEARCH_PRODUCTS',
   error,
 });
@@ -103,26 +103,57 @@ export const fetchSearchProducts = (category, query) => {
   if (category === -1) {
     return function (dispatch) {
       dispatch(requestSearchProducts());
-      let q = '/products';
+      const q = '/products';
       return fetch(q)
         .then(
           response => response.json(),
           error => dispatch(errorSearchProducts(error)),
         )
-        .then(json => {
-          dispatch(receiveSearchProducts(query,json.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))))
-        });
+        .then(json =>
+          dispatch(receiveSearchProducts(
+            query,
+            json.filter(p => p.name.toLowerCase().includes(query.toLowerCase())),
+          )));
     };
   }
   return function (dispatch) {
     dispatch(requestSearchProducts());
-    let q = `/products/sublevel/${category}/search?name=${query}`;
+    const q = `/products/sublevel/${category}/search?name=${query}`;
     return fetch(q)
       .then(
         response => response.json(),
         error => dispatch(errorSearchProducts(error)),
       )
-      .then(json => dispatch(receiveSearchProducts(query,json)));
+      .then(json => dispatch(receiveSearchProducts(query, json)));
+  };
+};
+
+const requestSort = (by, desc) => ({
+  type: 'REQUEST_SORT',
+  by,
+  desc,
+});
+
+const receiveSort = products => ({
+  type: 'RECEIVE_SORT',
+  products,
+});
+
+const errorSort = error => ({
+  type: 'ERROR_SORT',
+  error,
+});
+
+export const fetchSort = (category, by, desc) => {
+  return function (dispatch) {
+    dispatch(requestSort(by, desc));
+    const q = `/products/sublevel/${category}/order?by=${by}&desc=${desc}`;
+    return fetch(q)
+      .then(
+        response => response.json(),
+        error => dispatch(errorSort(error)),
+      )
+      .then(json => dispatch(receiveSort(json)));
   };
 };
 
@@ -131,6 +162,16 @@ export const addProduct = (id, quantity, product) => ({
   id,
   quantity,
   product,
+});
+
+export const setSortName = filterName => ({
+  type: 'SET_SORT_NAME',
+  filterName,
+});
+
+export const setDesc = desc => ({
+  type: 'SET_DESC',
+  desc,
 });
 
 export const showFilter = () => ({
@@ -173,22 +214,3 @@ export const setStockFilter = (min, max) => ({
   max,
 });
 
-export const sortPrice = asc => ({
-  type: 'SORT_PRICE',
-  asc,
-});
-
-export const sortAvailable = asc => ({
-  type: 'SORT_AVAILABLE',
-  asc,
-});
-
-export const sortQuantity = asc => ({
-  type: 'SORT_QUANTITY',
-  asc,
-});
-
-export const sortName = asc => ({
-  type: 'SORT_STOCK',
-  asc,
-});
