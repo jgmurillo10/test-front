@@ -8,13 +8,13 @@ import './spinner.css';
 
 const { Meta } = Card;
 const Products = ({ products, loading, addProductCart }) => {
-  if (loading) {
-    return (
-      <div className="spinner">
-        <Icon type="loading" />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="spinner">
+  //       <Icon type="loading" />
+  //     </div>
+  //   );
+  // }
   return (
     <div>
       <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>
@@ -23,6 +23,7 @@ const Products = ({ products, loading, addProductCart }) => {
           products.map(p => (
             <Col key={p.id} span={4} md={6} sm={12} xs={24} >
               <Card
+                loading={loading}
                 style={{ margin: '1em' }}
                 cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
                 actions={[
