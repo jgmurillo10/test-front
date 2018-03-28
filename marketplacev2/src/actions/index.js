@@ -100,7 +100,7 @@ export const errorSearchProducts = error => ({
 });
 
 export const fetchSearchProducts = (category, query) => {
-  if (category === '') {
+  if (category === -1) {
     return function (dispatch) {
       dispatch(requestSearchProducts());
       let q = '/products';

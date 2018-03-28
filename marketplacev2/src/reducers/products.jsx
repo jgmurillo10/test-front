@@ -1,6 +1,6 @@
 const products = (state = {
   title: 'Todos los productos',
-  category: '',
+  category: -1,
   isFetching: false,
   items: [],
 }, action) => {
@@ -9,7 +9,7 @@ const products = (state = {
       return Object.assign({}, state, {
         isFetching: true,
         title: 'Todos los productos',
-        category: '',
+        category: -1,
       });
     case 'RECEIVE_PRODUCTS':
       return Object.assign({}, state, {
