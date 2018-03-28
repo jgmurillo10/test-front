@@ -10,6 +10,9 @@ const showConfirm = (p, addProductCart) => {
   const content = (
     <InputNumber min={1} defaultValue={1} onChange={onChange} />
   );
+  if (!p.available) {
+    return message.error('Este producto no está disponible');
+  }
   return confirm({
     title: `¿Cuántas unidades de ${p.name} deseas agregar a tu carrito?`,
     content: content,

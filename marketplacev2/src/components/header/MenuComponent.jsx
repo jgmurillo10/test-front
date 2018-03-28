@@ -20,6 +20,10 @@ const MenuComponent = ({ categories, dispatch }) => {
     })
   );
   const onClick = (e) => {
+    console.log(e.keyPath);
+    current=e.keyPath[e.keyPath.length -1];
+    current = e.key;
+    console.log(current);
     dispatch(fetchProductsByCategory(+e.key, e.item.props.children));
   };
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Icon, Avatar, Row, Col } from 'antd';
+import { Card, Icon, Avatar, Row, Col, Modal } from 'antd';
 import { connect } from 'react-redux';
-import { addProduct } from '../../actions';
+import { addProduct, toggleProduct } from '../../actions';
 import showConfirm from './Confirm';
 import './spinner.css';
 
 const { Meta } = Card;
-const Products = ({ products, loading, addProductCart }) => {
+const Products = ({ products, loading, visible, selected, addProductCart, toggleProduct }) => {
   return (
     <div>
       <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>
@@ -20,23 +20,48 @@ const Products = ({ products, loading, addProductCart }) => {
                 style={{ margin: '1em' }}
                 cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
                 actions={[
-                  <Icon type="ellipsis" />,
                   <Icon
-                    onClick={() => showConfirm(p, addProductCart)}
-                    type="shopping-cart"
+                    onClick={() => toggleProduct(p)}
+                    type="ellipsis"
                   />,
+                  <span disabled={!p.available}>
+                    <Icon
+                      onClick={() => showConfirm(p, addProductCart)}
+                      type="shopping-cart"  
+                    />
+                  </span>,
                 ]}
               >
                 <Meta
                   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                   title={p.name}
-                  description={p.price}
+                  description={`$${p.price}`}
                 />
+                <br />
+                <p>
+                  {
+                    p.available ?
+                    (<span>Disponible <Icon type="check-circle-o" /> </span>)
+                    :
+                    (<span>No disponible <Icon type="close-circle-o" /> </span>)
+                  }
+                </p>
               </Card>
             </Col>
           ))
         }
       </Row>
+      <Modal
+        title={`Producto ${selected.name}`}
+        visible={visible}
+        onOk={toggleProduct}
+        onCancel={toggleProduct}
+      >
+        <p>id: {selected.id}</p>
+        <p>disponible {selected.available ? (<Icon type="check-circle-o" />): (<Icon type="close-circle-o" />)}</p>
+        <p>precio: $ {selected.price}</p>
+        <p>cantidad: {selected.quantity} (en stock)</p>
+      </Modal>
     </div>
   );
 };
@@ -44,10 +69,13 @@ const Products = ({ products, loading, addProductCart }) => {
 const mapStateToProps = state => ({
   products: state.products.items,
   loading: state.products.isFetching || state.categories.isFetching,
+  visible: state.products.toggleProduct,
+  selected: state.products.selected,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addProductCart: (p,q) => dispatch(addProduct(p.id, q, p)),
+  addProductCart: (p, q) => dispatch(addProduct(p.id, q, p)),
+  toggleProduct: p => dispatch(toggleProduct(p)),
 });
 
 Products.propTypes = {

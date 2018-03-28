@@ -1,4 +1,6 @@
 const products = (state = {
+  selected: {},
+  toggleProduct: false,
   title: 'Todos los productos',
   category: -1,
   isFetching: false,
@@ -44,6 +46,11 @@ const products = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         items: action.products,
+      });
+    case 'TOGGLE_PRODUCT':
+      return Object.assign({}, state, {
+        toggleProduct: !state.toggleProduct,
+        selected: action.product,
       });
     default:
       return state;

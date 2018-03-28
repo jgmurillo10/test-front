@@ -173,6 +173,11 @@ export const editProduct = (id,quantity, product) => ({
   product,
 });
 
+export const toggleProduct = product => ({
+  type: 'TOGGLE_PRODUCT',
+  product,
+});
+
 export const setSortName = filterName => ({
   type: 'SET_SORT_NAME',
   filterName,
