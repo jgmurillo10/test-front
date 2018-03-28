@@ -20,7 +20,12 @@ const Cart = ({ visible, products, toggle, deleteProduct, deleteProducts, addPro
       onCancel={toggle}
       footer={[
         <Button key="back" onClick={toggle}>Seguir comprando</Button>,
-        <Button key="submit" type="primary" onClick={deleteProducts} disabled={products.length === 0}>
+        <Button
+          key="submit"
+          type="primary"
+          onClick={deleteProducts}
+          disabled={products.length === 0}
+        >
           Comprar todo
         </Button>,
       ]}
@@ -37,12 +42,13 @@ const Cart = ({ visible, products, toggle, deleteProduct, deleteProducts, addPro
                 title={p.name}
                 extra={
                   [
-                    <Popconfirm 
+                    <Popconfirm
+                      key={p.id}
                       title="¿Estás seguro de eliminar este producto?" 
                       onConfirm={()=>{deleteProduct(p);message.success(`Eliminaste ${p.name} de tu lista.`);toggle()}}
                       okText="Sí" 
                       cancelText="No">
-                      <Icon style={{ marginRight: '1em', cursor: 'pointer' }} key={p.id} type="delete" />
+                      <Icon style={{ marginRight: '1em', cursor: 'pointer' }} type="delete" />
                     </Popconfirm>,
                     <Icon onClick={()=>showConfirm(p,addProductCart)} style={{ cursor: 'pointer' }} key={i} type="edit" />,
                   ]

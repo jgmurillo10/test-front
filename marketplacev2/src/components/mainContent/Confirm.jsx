@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputNumber, Modal } from 'antd';
+import { InputNumber, Modal, message } from 'antd';
 
 const confirm = Modal.confirm;
 const showConfirm = (p, addProductCart) => {
@@ -16,6 +16,7 @@ const showConfirm = (p, addProductCart) => {
     onOk() {
       console.log('OK',p,quantity);
       addProductCart(p, quantity);
+      message.success(`Agregaste ${quantity} unidades de ${p.name} a tu carrito.`);
     },
     onCancel() {
       console.log('Cancel');
