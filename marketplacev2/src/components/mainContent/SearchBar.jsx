@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, Icon } from 'antd';
-import FilterComponent from './FilterComponent';
+import FilterSortComponent from './FilterSortComponent';
 import { showFilter, fetchSearchProducts } from '../../actions';
 
 const Search = Input.Search;
@@ -22,7 +22,7 @@ const SearchBar = ({
         placeholder="Buscar productos..."
         onSearch={value => search(category, value)}
       />
-      {displayFilter ? <FilterComponent /> : ''}
+      {displayFilter ? <FilterSortComponent /> : ''}
     </div>
   );
 };
