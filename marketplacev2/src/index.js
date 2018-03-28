@@ -9,6 +9,7 @@ import rootReducer from './reducers';
 import { fetchProducts, fetchCategories, fetchStats } from './actions';
 import registerServiceWorker from './registerServiceWorker';
 import './App.css';
+import 'babel-polyfill';
 
 const loggerMiddleware = createLogger();
 const store = createStore(
