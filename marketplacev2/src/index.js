@@ -16,7 +16,7 @@ const store = createStore(
   applyMiddleware(
     thunkMiddleware,
     loggerMiddleware,
-  )
+  ),
 );
 store.dispatch(fetchProducts());
 store.dispatch(fetchCategories());

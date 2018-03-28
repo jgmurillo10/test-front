@@ -37,7 +37,7 @@ const FilterComponent = () => {
               </Select>
             </Col>
             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-              <Radio.Group value='asc' onChange={handleChangeRadio}>
+              <Radio.Group value="asc" onChange={handleChangeRadio}>
                 <Radio.Button style={{ width: 75 }} value="asc">Asc</Radio.Button>
                 <Radio.Button style={{ width: 75 }} value="desc">Desc</Radio.Button>
               </Radio.Group>

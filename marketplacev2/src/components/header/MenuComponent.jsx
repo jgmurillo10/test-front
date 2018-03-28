@@ -7,7 +7,7 @@ import { fetchProductsByCategory } from '../../actions';
 const SubMenu = Menu.SubMenu;
 const MenuComponent = ({ categories, dispatch }) => {
   let current;
-  const getMenu = (arr) => (
+  const getMenu = arr => (
     arr.map((d) => {
       if (d.children) {
         return (

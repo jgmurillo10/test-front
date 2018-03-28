@@ -9,6 +9,11 @@ export const receiveCategories = categories => ({
   categories,
 });
 
+export const errorCategories = error => ({
+  type: 'ERROR_CATEGORIES',
+  error,
+});
+
 export const fetchCategories = () => {
   return function (dispatch) {
     dispatch(requestCategories());
@@ -16,7 +21,7 @@ export const fetchCategories = () => {
     return fetch('/categories')
       .then(
         response => response.json(),
-        error => console.log('An error ocurred', error),
+        error => dispatch(errorCategories(error)),
       )
       .then(json => dispatch(receiveCategories(json)));
   };
@@ -31,6 +36,10 @@ export const receiveProducts = products => ({
   products,
 });
 
+export const errorProducts = error => ({
+  type: 'ERROR_PRODUCTS',
+  error,
+});
 export const fetchProducts = () => {
   return function (dispatch) {
     dispatch(requestProducts());
@@ -38,7 +47,7 @@ export const fetchProducts = () => {
     return fetch('/products')
       .then(
         response => response.json(),
-        error => console.log('An error ocurred', error),
+        error => dispatch(errorProducts(error)),
       )
       .then(json => dispatch(receiveProducts(json)));
   };
@@ -56,14 +65,19 @@ export const receiveProductsByCategory = (category, products) => ({
   products,
 });
 
-export const fetchProductsByCategory = (category, categoryName) => {
+export const errorProductsByCategory = error => ({
+  type: 'ERROR_PRODUCTS_CATEGORY',
+  error,
+});
+
+export const fetchProductsByCategory = (category, categoryName) => {
   return function (dispatch) {
     dispatch(requestProductsByCategory(category, categoryName));
 
     return fetch(`/products/sublevel/${category}`)
       .then(
         response => response.json(),
-        error => console.log('An error ocurred', error),
+        error => dispatch(errorProductsByCategory(error)),
       )
       .then(json => dispatch(receiveProductsByCategory(category, json)));
   };
@@ -74,10 +88,15 @@ export const requestSearchProducts = query => ({
   query,
 });
 
-export const receiveSearchProducts = (query,products) => ({
+export const receiveSearchProducts = (query, products) => ({
   type: 'RECEIVE_SEARCH_PRODUCTS',
   query,
   products,
+});
+
+export const errorSearchProducts = error => ({
+  type: 'ERROR_SEARCH_PRODUCTS',
+  error,
 });
 
 export const fetchSearchProducts = (category, query) => {
@@ -88,10 +107,10 @@ export const fetchSearchProducts = (category, query) => {
       return fetch(q)
         .then(
           response => response.json(),
-          error => console.log('An error ocurred', error),
+          error => dispatch(errorSearchProducts(error)),
         )
         .then(json => {
-          dispatch(receiveSearchProducts(query,json.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))));
+          dispatch(receiveSearchProducts(query,json.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))))
         });
     };
   }
@@ -101,7 +120,7 @@ export const fetchSearchProducts = (category, query) => {
     return fetch(q)
       .then(
         response => response.json(),
-        error => console.log('An error ocurred', error),
+        error => dispatch(errorSearchProducts(error)),
       )
       .then(json => dispatch(receiveSearchProducts(query,json)));
   };
