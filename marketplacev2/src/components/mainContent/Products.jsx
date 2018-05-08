@@ -13,12 +13,12 @@ const Products = ({ products, loading, visible, selected, addProductCart, toggle
       <h2 style={{ margin: '1em' }} >{`Mostrando ${products.length} productos`}</h2>
       <Row>
         {
-          products.map(p => (
+          products.map((p,i) => (
             <Col key={p.id} span={4} md={6} sm={12} xs={24} >
               <Card
                 loading={loading}
                 style={{ margin: '1em' }}
-                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                cover={<img alt="example" src={i%2 == 0 ? "https://media.gettyimages.com/photos/playful-businesswoman-riding-bicycle-against-white-background-picture-id705001181" : "https://media.gettyimages.com/photos/bicycle-on-street-against-white-background-picture-id767997999"} />}
                 actions={[
                   <Icon
                     onClick={() => toggleProduct(p)}

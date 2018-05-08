@@ -1,19 +1,19 @@
 [
 	{
 		"id": 1,
-		"name": "Bebidas",
+		"name": "MTB",
 		"sublevels": [
 			{
 				"id": 1,
-				"name": "Gaseosas",
+				"name": "Category 1",
 				"sublevels": [
 					{
 						"id": 2,
-						"name": "Con azúcar"
+						"name": "Sub Category 1"
 					},
 					{
 						"id": 3,
-						"name": "Sin azúcar"
+						"name": "Sub Category 2"
 					}
 				]
 			}
@@ -21,7 +21,7 @@
 	},
 	{
 		"id": 2,
-		"name": "Desayunos",
+		"name": "BMX",
 		"sublevels": [
 			{
 				"id": 4,
@@ -47,7 +47,7 @@
 	},
 	{
 		"id": 8,
-		"name": "Almuerzos",
+		"name": "Road",
 		"sublevels": [
 			{
 				"id": 9,
@@ -61,7 +61,7 @@
 	},
 	{
 		"id": 11,
-		"name": "Vinos",
+		"name": "Touring",
 		"sublevels": [
 			{
 				"id": 12,
